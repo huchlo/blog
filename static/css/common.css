@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'Consolas';
+  font-display: fallback;
+  src: url('../font/consola.ttf');
+}
+
+html {
+  color: #333333;
+  background: #ffffff;
+  scroll-behavior: smooth;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: all 500ms ease;
+  font-family: Consolas, 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+}
+body {
+  max-width: 680px;
+  padding: 0 14px;
+  margin: 0 auto;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+ol,
+ul {
+  list-style: none;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+ul,
+ol,
+li,
+blockquote {
+  padding: 0;
+  margin: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+input,
+select,
+textarea {
+  font-family: inherit;
+  outline: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+}
+pre,
+code {
+  font-family: inherit;
+}
+input:-webkit-autofill {
+  /* 自动填充的文本颜色 */
+  -webkit-text-fill-color: #333333 !important;
+  /* -webkit-text-fill-color: var(--text-color) !important; */
+
+  /* 方式1：使用内阴影覆盖自动填充的背景色 */
+  /* box-shadow: 0 0 0 1000px #ffffff inset !important; */
+
+  /* 方式2：通过延迟一个月，取消自动填充的背景色 */
+  -webkit-transition: background-color 2592000s ease-in-out 0s;
+  transition: background-color 2592000s ease-in-out 0s;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: #999999;
+}
+::selection {
+  background-color: #4a4a4a;
+  color: #f9f9f9;
+}
+
+@media screen and (max-width: 560px) {
+ 
+}
