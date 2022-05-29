@@ -6,3 +6,4 @@ description: huangchenglong blog
 keywords: JavaScript
 author: huangchenglong
 baseurl: ''
+theme: jekyll-theme-minimal
