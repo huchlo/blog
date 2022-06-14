@@ -1,9 +1,7 @@
 encoding: utf-8
-copyright: '©2017'
-ICP: '蜀ICP备17040152号-1'
 title: huangchenglong
-description: huangchenglong blog
-keywords: JavaScript
+description: huangchenglong
+keywords: huangchenglong
 author: huangchenglong
 baseurl: ''
 theme: jekyll-theme-minimal
