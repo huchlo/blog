@@ -1,8 +1,5 @@
-encoding: utf-8
-title: huangchenglong
-description: huangchenglong
-keywords: huangchenglong
-author: huangchenglong
-baseurl: ''
-# theme: jekyll-theme-modernist
-remote_theme: pages-themes/modernist@v0.2.0
+title: Modernist theme
+description: Modernist is a theme for GitHub Pages.
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-modernist
