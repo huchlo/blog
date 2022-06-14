@@ -4,4 +4,5 @@ description: huangchenglong
 keywords: huangchenglong
 author: huangchenglong
 baseurl: ''
-theme: jekyll-theme-modernist
+# theme: jekyll-theme-modernist
+remote_theme: pages-themes/modernist@v0.2.0
