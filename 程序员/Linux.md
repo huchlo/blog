@@ -4,7 +4,9 @@
 > :~$指用户的根目录，一般在系统的home/username中，快速进入方式：`cd ~/`
 > 执行\*.sh文件:  `sh *.sh./*.sh`
 > 发放权限 `chmod +x filename`
+
 # ssh免密登录
+
 - 先生成密钥，不然会报错
 ssh-keygen -t rsa
 ssh-keygen -t dsa
@@ -15,7 +17,9 @@ ssh-copy-id root@com01
 ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
 cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
 http://lnmp.ailinux.net/ssh-keygen
+
 # 常用命令
+
 [Linux命令学习手册](http://lnmp.ailinux.net/)
 [Linux命令大全 | 菜鸟教程](https://www.runoob.com/linux/linux-command-manual.html)
 ```bash
