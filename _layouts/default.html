@@ -23,7 +23,9 @@
         {% if site.description or site.github.project_tagline %}
           <p>{{ site.description | default: site.github.project_tagline }}</p>
         {% endif %}
-        <span>{{ site }}</span>
+        <div>{{ site }}</div>
+        <div>{{ site.static_files }}</div>
+        <div>{{ file }}</div>
         <!-- <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub</a></p> -->
       </header>
       <section>
