@@ -25,7 +25,11 @@
         {% endif %}
         <div>{{ site }}</div>
         <div>{{ site.static_files }}</div>
-        <div>{{ file }}</div>
+        <div>
+          {% for item in site.static_files %}
+            {{ item.path }}
+          {% endfor %}
+        </div>
         <!-- <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub</a></p> -->
       </header>
       <section>
