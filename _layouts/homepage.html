@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% seo %}
+    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    {% include head-custom.html %}
+
+    <style>
+        div.header {
+            font-family: "Segoe UI Light", "sans-serif";
+            font-size: 20.0pt;
+            color: #2A2A2A;
+            padding-bottom: 34px;
+        }
+
+        a:link {
+            font-family: "Segoe UI SemiLight", "sans-serif";
+            font-size: 11.0pt;
+            color: #00749E;
+            text-decoration: none;
+        }
+
+        table tr.header {
+            font-family: "Segoe UI Semibold", "sans-serif";
+            font-size: 11.0pt;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        table tr td.Regular {
+            height: 20px;
+            vertical-align: text-top;
+            font-family: "Segoe UI SemiLight", "sans-serif";
+            font-size: 11.0pt;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        table tr td.Secondary {
+            height: 20px;
+            vertical-align: text-top;
+            font-family: "Segoe UI SemiLight", "sans-serif";
+            font-size: 11.0pt;
+            color: #707070;
+            text-decoration: none;
+        }
+
+        div.Copyright {
+            padding-top: 60px;
+            font-family: "Segoe UI SemiLight", "sans-serif";
+            font-size: 11.0pt;
+            color: #2A2A2A;
+        }
+
+        div.NoList {
+            font-family: "Segoe UI Semibold", "sans-serif";
+            font-size: 11.0pt;
+            color: #000000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+{% capture my_path %}{% for item in site.static_files | where:"note",true %}{{ item.path }},{% endfor %}{% endcapture %}
+
+<body ondragstart="return false;" onload="load('{{my_path}}')">
+    {{ content }}
+</body>
+
+</html>

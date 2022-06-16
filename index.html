@@ -1,36 +1,31 @@
-<!doctype html>
-<html lang="{{ site.lang | default: "en-US" }}">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+---
+layout: page
+title: 首页
+---
 
-{% seo %}
+<div leftmargin="60px" topmargin="50px">
+  <div dir="ltr" lang="zh-CN">
+    <div class="header">笔记</div>
+    <table width="730px" border="1px" frame="void" rules="groups">
 
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+      <tr>
+        <td height="10px" colspan="3" />
+      </tr>
+      <tbody>
+        <!-- <tr>
+                    <td class="Regular">微信公众号：Pokill</td>
+                </tr>
+                <tr>
+                    <td class="Regular"><a href="https://weibo.com/u/7549160752" target="_blank">微博<img style="height: 12px;margin-left: 6px;" src="./link.jpg" alt=""></a></td>
+                </tr>
+                <tr>
+                    <td class="Regular"><a href="https://author.baidu.com/home?context={%22uk%22:%22Va42aEBqUi-DaAZ-flhLug%22}"  target="_blank">百家号<img style="height: 12px;margin-left: 6px;" src="./link.jpg" alt=""></a></td>
+                </tr>
+                <tr>
+                    <td class="Regular"><a href="https://www.zhihu.com/org/pokillshe-qu"  target="_blank">知乎<img style="height: 12px;margin-left: 6px;" src="./link.jpg" alt=""></a></td>
+                </tr>      -->
+      </tbody>
+    </table>
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    {% include head-custom.html %}
-  </head>
-
-  {% capture my_path %}{% for item in site.static_files | where:"note",true %}{{ item.path }},{% endfor %}{% endcapture %}  
-  <body onload="load('{{my_path}}')">
-    <div class="wrapper" >
-      <header {% unless site.description or site.github.project_tagline %} class="without-description" {% endunless %}>
-        <h1>{{ site.title | default: site.github.repository_name }}</h1>
-        {% if site.description or site.github.project_tagline %}
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
-        {% endif %}
-      </header>
-      <section>
-
-        content
-
-      </section>
-    </div>
-  </body>
-</html>
+  </div>
+</div>
