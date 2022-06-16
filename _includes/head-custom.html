@@ -10,8 +10,23 @@
         console.log(var1)
         const v = var1.split(",")
         v.forEach((item) => {
-            console.log(item.split("/"))
+            // const arr = item.split("/");
+            // console.log(item.split("/"))
+            let a = document.createElement("a");
+            a.setAttribute("href", item);
+            a.text = item
+
+            let td = document.createElement("td")
+            td.setAttribute("class", "Regular");
+            td.appendChild(a)
+
+            let tr = document.createElement("tr");
+            tr.appendChild(td)
+
+            document.getElementById("content").appendChild(tr)
         })
+
     }
 
 </script>
+
