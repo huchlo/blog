@@ -8,9 +8,15 @@
 <script>
     function load(var1){
         console.log(var1)
+        console.log(typeof var1)
         console.log("...")
-        const filestr = site.static_files 
+        const filestr = '{{site.static_files}}'; 
         console.log(filestr)
+    }
+
+    function load1(var1){
+        console.log(var1)
+        console.log(typeof var1)
     }
 
   </script>

@@ -17,7 +17,12 @@
     {% include head-custom.html %}
   </head>
   <body onload="load('{{site.static_files}}')">
-    <div class="wrapper">
+
+    {% capture my_variable %}
+    {% for item in site.static_files %}{{ item.path }}{% endfor %}
+    {% endcapture %}
+    
+    <div class="wrapper" onload="load1('{{my_variable}}')">
       <header {% unless site.description or site.github.project_tagline %} class="without-description" {% endunless %}>
         <h1>{{ site.title | default: site.github.repository_name }}</h1>
         {% if site.description or site.github.project_tagline %}
