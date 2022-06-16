@@ -22,15 +22,20 @@
         console.log(s)
         console.log(typeof s)
 
-        const d = '{{site.static_files.path}}'; 
+        const d = '{{site.static_files.length}}'; 
         console.log(d)
         console.log(typeof d)
-    }
 
-    function load1(var1){
-        console.log(var1)
-        console.log(typeof var1)
+        const f = '{{site.static_files.length}}'; 
+        console.log(f)
+        console.log(typeof f)
+
+        let static_files = '{{site.static_files}}'
+        for(i in static_files){
+            console.log(i)
+            console.log(static_files[i])
+        }
+
     }
 
   </script>
-<!-- end custom head snippets -->
