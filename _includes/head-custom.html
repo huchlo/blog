@@ -24,10 +24,10 @@
 
         let i = 0;
         do{
-            const d = '{{site.static_files['+i+'].path}}';
+            const d = "'{{site.static_files["+i+"].path}}'";
             console.log(d)
             i++;
-        }while(i == 20)
+        }while(i < 20)
 
     }
 
