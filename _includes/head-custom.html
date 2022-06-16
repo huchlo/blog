@@ -22,12 +22,36 @@
         console.log(s)
         console.log(typeof s)
 
-        let i = 0;
-        do{
-            const d = "'{{site.static_files["+i+"].path}}'";
-            console.log(d)
-            i++;
-        }while(i < 20)
+        let i = 1;
+
+        const d = '{{site.static_files['+i+'].path}}'; 
+        console.log(d)
+        console.log(typeof d)
+
+        const f = "{{site.static_files["+i+"].path}}"; 
+        console.log(f)
+        console.log(typeof f)
+
+        const g = '"{{site.static_files['+i+'].path}}"'; 
+        console.log(g)
+        console.log(typeof g)
+
+        const h = "'{{site.static_files["+i+"].path}}'"; 
+        console.log(h)
+        console.log(typeof h)
+
+        const j = '{{site.static_files[i].path}}'; 
+        console.log(j)
+        console.log(typeof j)
+
+        const k = "{{site.static_files[i].path}}"; 
+        console.log(k)
+        console.log(typeof k)
+        // do{
+            // const d = "'{{site.static_files["+i+"].path}}'";
+        //     console.log(d)
+        //     i++;
+        // }while(i < 20)
 
     }
 
