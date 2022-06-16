@@ -25,13 +25,6 @@
         {% if site.description or site.github.project_tagline %}
           <p>{{ site.description | default: site.github.project_tagline }}</p>
         {% endif %}
-        <div>{{ site }}</div>
-        <div>{{ site.static_files }}</div>
-        <div>
-          {% for item in site.static_files %}
-            {{ item.path }}
-          {% endfor %}
-        </div>
       </header>
       <section>
 
