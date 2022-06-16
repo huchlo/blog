@@ -12,9 +12,27 @@
         v.forEach((item) => {
             // const arr = item.split("/");
             // console.log(item.split("/"))
+            const file_name = item.split(".")[0];
+            let path_name = "";
+            for (index in item.split("/")) {
+                const i = index + 2;
+                if (item[i] && item[i].indexOf(".md") > 0) {
+                    if (path_name) {
+                        path_name += " - ";
+                    }
+                    path_name += item[i].split(".")[0];
+                } else if (item[i]) {
+                    if (path_name) {
+                        path_name += " - ";
+                    }
+                    path_name += item[i];
+                } else {
+                    break;
+                }
+            }
             let a = document.createElement("a");
-            a.setAttribute("href", item);
-            a.text = item
+            a.setAttribute("href", file_name + '.html');
+            a.text = path_name
 
             let td = document.createElement("td")
             td.setAttribute("class", "Regular");
@@ -29,4 +47,3 @@
     }
 
 </script>
-
