@@ -3,8 +3,9 @@ description: Modernist is a theme for GitHub Pages..
 # show_downloads: true
 google_analytics:
 theme: jekyll-theme-modernist
-defaults: 
-  scope:
-    path: "笔记"
-  values:
-    note: true
+
+defaults:
+  - scope:
+      path: "笔记"
+    values:
+      note: true
