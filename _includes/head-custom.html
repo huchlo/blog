@@ -6,65 +6,12 @@
 <!-- You can set your favicon here -->
 <!-- link rel="shortcut icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}" -->
 <script>
-    function load(var1){
+    function load(var1) {
         console.log(var1)
-        console.log(typeof var1)
-        console.log("...")
-        const filestr = '{{site.static_files}}'; 
-        console.log(filestr)
-        console.log(typeof filestr)
-
-        const a = '{{site.static_files[0]}}'; 
-        console.log(a)
-        console.log(typeof a)
-
-        const s = '{{site.static_files[0].path}}'; 
-        console.log(s)
-        console.log(typeof s)
-
-        let i = 0;
-
-        const d = '{{site.static_files['+i+'].path}}'; 
-        console.log(d)
-        console.log(typeof d)
-
-        const f = "{{site.static_files["+i+"].path}}"; 
-        console.log(f)
-        console.log(typeof f)
-
-        const g = '"{{site.static_files['+i+'].path}}"'; 
-        console.log(g)
-        console.log(typeof g)
-
-        const h = "'{{site.static_files["+i+"].path}}'"; 
-        console.log(h)
-        console.log(typeof h)
-
-        const j = '{{site.static_files[i].path}}'; 
-        console.log(j)
-        console.log(typeof j)
-
-        const k = "{{site.static_files[i].path}}"; 
-        console.log(k)
-        console.log(typeof k)
-
-        const l = "{{"+"site.static_files["+i+"].path"+"}}"; 
-        console.log(l)
-        console.log(typeof l)
-
-        const z = "'{{"+"site.static_files["+i+"].path"+"}}'"; 
-        console.log(z)
-        console.log(typeof z)
-
-        const x = `'{{site.static_files[${i}].path}}'`; 
-        console.log(x)
-        console.log(typeof x)
-        // do{
-            // const d = "'{{site.static_files["+i+"].path}}'";
-        //     console.log(d)
-        //     i++;
-        // }while(i < 20)
-
+        const v = var1.split(",")
+        v.forEach((item) => {
+            console.log(item.split("/"))
+        })
     }
 
-  </script>
+</script>
