@@ -12,6 +12,19 @@
         console.log("...")
         const filestr = '{{site.static_files}}'; 
         console.log(filestr)
+        console.log(typeof filestr)
+
+        const a = '{{site.static_files[0]}}'; 
+        console.log(a)
+        console.log(typeof a)
+
+        const s = '{{site.static_files[0].path}}'; 
+        console.log(s)
+        console.log(typeof s)
+
+        const d = '{{site.static_files.path}}'; 
+        console.log(d)
+        console.log(typeof d)
     }
 
     function load1(var1){
