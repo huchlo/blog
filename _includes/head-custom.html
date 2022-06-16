@@ -10,22 +10,21 @@
         console.log(var1)
         const v = var1.split(",")
         v.forEach((item) => {
-            // const arr = item.split("/");
-            // console.log(item.split("/"))
             const file_name = item.split(".")[0];
             let path_name = "";
-            for (index in item.split("/")) {
-                const i = index + 2;
-                if (item[i] && item[i].indexOf(".md") > 0) {
+            const item_arr = item.split("/");
+            for (index in item_arr) {
+                const i = parseInt(index) + 2;
+                if (item_arr[i] && item_arr[i].indexOf(".md") > 0) {
                     if (path_name) {
                         path_name += " - ";
                     }
-                    path_name += item[i].split(".")[0];
-                } else if (item[i]) {
+                    path_name += item_arr[i].split(".")[0];
+                } else if (item_arr[i]) {
                     if (path_name) {
                         path_name += " - ";
                     }
-                    path_name += item[i];
+                    path_name += item_arr[i];
                 } else {
                     break;
                 }

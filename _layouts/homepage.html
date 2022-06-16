@@ -74,8 +74,6 @@
 {% capture my_path %}{% for item in md_files %}{{ item.path }},{% endfor %}{% endcapture %}
 
 <body ondragstart="return false;" onload="load('{{my_path}}')">
-    <span>{{md_files}}</span>
-
     {{ content }}
 </body>
 
