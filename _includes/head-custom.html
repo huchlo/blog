@@ -22,7 +22,7 @@
         console.log(s)
         console.log(typeof s)
 
-        let i = 1;
+        let i = 0;
 
         const d = '{{site.static_files['+i+'].path}}'; 
         console.log(d)
@@ -47,6 +47,18 @@
         const k = "{{site.static_files[i].path}}"; 
         console.log(k)
         console.log(typeof k)
+
+        const l = "{{"+"site.static_files["+i+"].path"+"}}"; 
+        console.log(l)
+        console.log(typeof l)
+
+        const z = "'{{"+"site.static_files["+i+"].path"+"}}'"; 
+        console.log(z)
+        console.log(typeof z)
+
+        const x = `{{site.static_files[${i}].path}}`; 
+        console.log(x)
+        console.log(typeof x)
         // do{
             // const d = "'{{site.static_files["+i+"].path}}'";
         //     console.log(d)
