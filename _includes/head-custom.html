@@ -22,19 +22,12 @@
         console.log(s)
         console.log(typeof s)
 
-        const d = '{{site.static_files.length}}'; 
-        console.log(d)
-        console.log(typeof d)
-
-        const f = '{{site.static_files.length}}'; 
-        console.log(f)
-        console.log(typeof f)
-
-        let static_files = '{{site.static_files}}'
-        for(i in static_files){
-            console.log(i)
-            console.log(static_files[i])
-        }
+        let i = 0;
+        do{
+            const d = '{{site.static_files['+i+'].path}}';
+            console.log(d)
+            i++;
+        }while(i == 20)
 
     }
 
