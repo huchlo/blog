@@ -6,3 +6,5 @@ theme: jekyll-theme-modernist
 defaulte: 
   scope:
     path: "笔记"
+  values:
+    note: true
