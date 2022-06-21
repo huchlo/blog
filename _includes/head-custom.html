@@ -2,47 +2,64 @@
 
 <!-- Setup Google Analytics -->
 {% include head-custom-google-analytics.html %}
-
 <!-- You can set your favicon here -->
 <!-- link rel="shortcut icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}" -->
 <script>
     function load(var1) {
-        console.log(var1)
+        //生成嵌套结构
+        let data = {};
         const v = var1.split(",")
         v.forEach((item) => {
             const file_name = item.split(".")[0];
-            let path_name = "";
             const item_arr = item.split("/");
             for (index in item_arr) {
                 const i = parseInt(index) + 2;
                 if (item_arr[i] && item_arr[i].indexOf(".md") > 0) {
-                    if (path_name) {
-                        path_name += " - ";
-                    }
-                    path_name += item_arr[i].split(".")[0];
+                    data_child.push(item_arr[i])  
                 } else if (item_arr[i]) {
-                    if (path_name) {
-                        path_name += " - ";
+                    if(!data_child[item_arr[i]]){
+                        data_child[item_arr[i]]= []
                     }
-                    path_name += item_arr[i];
+                    data_child = data_child[item_arr[i]]
                 } else {
                     break;
                 }
             }
-            let a = document.createElement("a");
-            a.setAttribute("href", file_name + '.html');
-            a.text = path_name
 
-            let td = document.createElement("td")
-            td.setAttribute("class", "Regular");
-            td.appendChild(a)
-
-            let tr = document.createElement("tr");
-            tr.appendChild(td)
-
-            document.getElementById("content").appendChild(tr)
         })
 
+        for (i in data) {
+            let path = '笔记/' + i + '/';
+            document.getElementById("content").appendChild(parse(i, path, data[i]))
+        }
     }
 
+
+    function parse(title, path, var1) {
+        let _ = document.createElement("div");
+        _.style = "border: 1px solid #dbdbdb;margin: 9px;padding: 0px 6px 3px 6px;";
+        let title_span = document.createElement("span");
+        title_span.innerText = title;
+        title_span.style = "background: white;font-weight: bold;font-size: 12px;padding: 0 6px;position: relative;top: -6px;";
+        _.appendChild(title_span);
+        _.appendChild(document.createElement("br"));
+        for (i in var1) {
+            if (typeof var1[i] == "string") {
+                let item = document.createElement("a");
+                item.setAttribute("href", path + var1[i] + '.html');
+                item.text = var1[i]
+                _.appendChild(item);
+            } else if (typeof var1[i] == "object") {
+
+                if (parseInt(i)) {
+                    console.log(i, var1[i], typeof i, parseInt(i))
+                    _.appendChild(parse(Object.keys(var1[i])[0], Object.keys(var1[i])[0] + '/', Object.values(var1[i])[0]));
+                } else {
+                    _.appendChild(parse(i, path + i + '/', var1[i]));
+                }
+
+            }
+        }
+        return _;
+    }
 </script>
