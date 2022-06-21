@@ -12,13 +12,14 @@
         v.forEach((item) => {
             const file_name = item.split(".")[0];
             const item_arr = item.split("/");
+            let data_child = data;
             for (index in item_arr) {
                 const i = parseInt(index) + 2;
                 if (item_arr[i] && item_arr[i].indexOf(".md") > 0) {
-                    data_child.push(item_arr[i])  
+                    data_child.push(item_arr[i])
                 } else if (item_arr[i]) {
-                    if(!data_child[item_arr[i]]){
-                        data_child[item_arr[i]]= []
+                    if (!data_child[item_arr[i]]) {
+                        data_child[item_arr[i]] = []
                     }
                     data_child = data_child[item_arr[i]]
                 } else {
