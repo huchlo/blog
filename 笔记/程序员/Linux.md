@@ -1,21 +1,21 @@
-# 基础认识
+# 系统目录
 
-> :/$ 指系统的根目录，快速进入方式：`cd /.`
-> :~$指用户的根目录，一般在系统的home/username中，快速进入方式：`cd ~/`
-> 执行\*.sh文件:  `sh *.sh./*.sh`
-> 发放权限 `chmod +x filename`
-
-# ssh免密登录
-- 先生成密钥，不然会报错
-ssh-keygen -t rsa
-ssh-keygen -t dsa
-- 把本地主机的公钥复制到远程主机的authorized_keys文件上
-ssh-copy-id root@com01
-需要输入com01的密码
-- 本机ssh免密
-ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
-cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
-http://lnmp.ailinux.net/ssh-keygen
+> /bin 存放着最经常使用的命令
+> /boot 启动 Linux 时使用的一些核心文件
+> /dev 存放着Linux 的外部设备，在 Linux 中访问设备的方式和访问文件的方式是相同的
+> **/etc** 存放所有的系统管理所需要的配置文件和子目录
+> **/home** 用户的主目录
+> /lib 存放着系统最基本的动态连接共享库
+> /lost+found 一般情况下为空，当系统非法关机后，这里就存放了一些文件
+> /media Linux 会把识别的设备挂载到这个目录下，例如U盘、光驱等等
+> /mnt 临时挂载别的文件系统
+> **/opt** 主机额外安装软件所摆放的目录
+> /proc 虚拟目录，可以通过直接访问这个目录来获取系统信息
+> **/root** 超级管理员的主目录
+> /sbin 存放的是系统管理员使用的系统管理程序
+> **/usr** 共享资源目录
+> 
+> /selinux /srv /sys /tmp /var /run
 
 # 常用命令
 [Linux命令学习手册](http://lnmp.ailinux.net/)
@@ -100,8 +100,8 @@ last # 查看用户登录日志
 cat /etc/passwd # 查看系统所有用户
 cat /etc/group # 查看系统所有组
 crontab -l # 查看当前用户的计划任务服务
-chkconfig –list # 列出所有系统服务
-chkconfig –list | grep on # 列出所有启动的系统服务程序
+chkconfig # 列出所有系统服务
+chkconfig | grep on # 列出所有启动的系统服务程序
 rpm -qa # 查看所有安装的软件包
 cat /proc/cpuinfo ：查看CPU相关参数的linux系统命令
 cat /proc/partitions ：查看linux硬盘和分区信息的系统信息命令
@@ -115,6 +115,7 @@ cat /proc/swaps ：查看所有swap分区的信息
 
 
 ## 命令工具
+
 ### `tar` `zip` `unzip` `bzip2` `bunzip2` `gunzip` `gzip`
 ```bash
 tar -xvf FileName.tar
@@ -122,6 +123,7 @@ tar -xzvf  FileName.tar.gz
 tar -jxvf FileName.tar.bz2
 ```
 [tar命令打包解压示例 - Linux命令大全教程™ (yiibai.com)](https://www.yiibai.com/linux/tar.html)
+
 ### `yum`
 ```bash
 yum list
@@ -135,6 +137,7 @@ yum remove <package_name>
 即替换/etc/yum.repos.d/CentOS-Base.repo文件
 [CentOS 源使用帮助 — USTC Mirror Help 文档](https://mirrors.ustc.edu.cn/help/centos.html)
 替换之后记得 `yum makecache`
+
 ### `systemd`
 在systemd中，所有的服务脚本都称为unit，主要分成6类：.service, .socket, .target, .path, snapshot, .timer，它们都存放在/usr/lib/systemd/system/目录中
 #systemctl
@@ -215,7 +218,7 @@ $ loginctl list-users
 $ loginctl show-user ruanyf
 ```
 
-### firewalld
+### `firewalld`
 ```bash
 systemctl status firewalld #查看防火墙状态
 systemctl is-enabled firewalld #查看防火墙是否开机启动
@@ -266,6 +269,18 @@ NETWORKING=yes
 HOSTNAME=centos03
 # /etc/hosts存放的是域名与ip的对应关系
 ```
+
+# ssh免密登录
+- 先生成密钥，不然会报错
+ssh-keygen -t rsa
+ssh-keygen -t dsa
+- 把本地主机的公钥复制到远程主机的authorized_keys文件上
+ssh-copy-id root@com01
+需要输入com01的密码
+- 本机ssh免密
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+http://lnmp.ailinux.net/ssh-keygen
 
 # Shell脚本
 shell解释器：`/bin/sh` `/bin/bash`，bash是sh的增强版本，文件后缀名都是 sh。

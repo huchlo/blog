@@ -27,5 +27,4 @@ select JSON_REPLACE("{\"contact\":[{\"name\":\"小黄\"},{\"name\":\"小红\"}]}
 [JSON Path Syntax](https://dev.mysql.com/doc/refman/5.7/en/json.html)
 [JSON Function Reference](https://dev.mysql.com/doc/refman/5.7/en/json-function-reference.html)
 
-
-
+# 安装
