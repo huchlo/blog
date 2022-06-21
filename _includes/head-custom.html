@@ -16,12 +16,12 @@
             for (index in item_arr) {
                 const i = parseInt(index) + 2;
                 if (item_arr[i] && item_arr[i].indexOf(".md") > 0) {
-                    data_child.push(item_arr[i])
+                    data_child.push(item_arr[i].split(".")[0]);
                 } else if (item_arr[i]) {
                     if (!data_child[item_arr[i]]) {
-                        data_child[item_arr[i]] = []
+                        data_child[item_arr[i]] = [];
                     }
-                    data_child = data_child[item_arr[i]]
+                    data_child = data_child[item_arr[i]];
                 } else {
                     break;
                 }
@@ -31,7 +31,7 @@
 
         for (i in data) {
             let path = '笔记/' + i + '/';
-            document.getElementById("content").appendChild(parse(i, path, data[i]))
+            document.getElementById("content").appendChild(parse(i, path, data[i]));
         }
     }
 
