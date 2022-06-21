@@ -4,3 +4,6 @@ Gemfile.lock
 *.gem
 .jekyll-cache/
 .jekyll-cache
+
+笔记/.*
+笔记/CMCC IOT

@@ -1,3 +1,12 @@
+---
+layout: mypost
+title: CentOS搭建开发环境
+categories: [Linux]
+---
+
+Update: 2020/02/05
+
+系统版本 CentOS 7
 
 ## 服务器配置
 
