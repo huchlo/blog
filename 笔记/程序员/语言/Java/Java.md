@@ -1,8 +1,7 @@
-数据格式
-
-file io
-
-spring
+后台接口数据body验证
+1. @Validated 组过滤，
+2. Json Schema验证
+以上验证仅限于post请求
 
 [Jackson使用手册 (altitude.xin)](https://www.altitude.xin/blog/home/#/chapter/60a4fe28746efc4e234e3724ece916c6?id=%F0%9F%A5%AD-jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)
 

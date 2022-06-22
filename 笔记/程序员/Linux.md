@@ -283,6 +283,32 @@ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
 cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
 http://lnmp.ailinux.net/ssh-keygen
 
+# 服务器间文件传输、同步
+
+scp、rsync、xsyn 
+
+```bash
+scp 文件夹or文件 root@192.168.121.134:/usr/loca
+```
+
+rsync 远程同步工具 
+
+拷贝有差异的文件，同步的linux需要都安装rsync
+-r, –recursive 对子目录以递归模式处理
+-R, –relative 使用相对路径信息
+-l, –links 保留软链结
+-v, –verbose 详细模式输出，传输过程可见
+
+```bash
+rsync -rvl etc/hadoop root@192.168.121.136:/usr/local/hadoop
+```
+
+xsync脚本基于rsync工具
+
+```bash
+...
+```
+
 # Shell脚本
 shell解释器：`/bin/sh` `/bin/bash`，bash是sh的增强版本，文件后缀名都是 sh。
 第一行必须为“#！/bin/bash”，脚本声明(#!)用来告诉系统使用哪种Shell解释器来执行该脚本。
