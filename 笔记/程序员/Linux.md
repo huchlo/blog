@@ -235,6 +235,7 @@ https://firewalld.org/documentation/man-pages/firewall-cmd.html
 ### `iptables`
 ```bash
 iptables -L -n -v #查看已添加的iptables规则
+iptables -I INPUT -p TCP --dport 10000 -j ACCEPT 
 ```
 
 # 源码安装3步骤

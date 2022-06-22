@@ -1,11 +1,18 @@
 # 安装
 ## 在 Linux 上安装
+
 [Git (git-scm.com)](https://git-scm.com/download/linux)
+
 ## 在 macOS 上安装
+
 [Git - Downloading Package (git-scm.com)](https://git-scm.com/download/mac)
+
 ## 在 Windows 上安装
+
 [Git - Downloading Package (git-scm.com)](https://git-scm.com/download/win)
+
 ## 从源代码安装
+
 如果你想从源码安装 Git，需要安装 Git 依赖的库：autotools、curl、zlib、openssl、expat 和 libiconv。 如果你的系统上有 `dnf` （如 Fedora）或者 `apt`（如基于 Debian 的系统）， 可以使用对应的命令来安装最少的依赖以便编译并安装 Git 的二进制版：
 ```console
 $ sudo dnf install dh-autoreconf curl-devel expat-devel gettext-devel \
@@ -18,6 +25,7 @@ $ sudo apt-get install dh-autoreconf libcurl4-gnutls-dev libexpat1-dev \
 $ sudo dnf install asciidoc xmlto docbook2X
 $ sudo apt-get install asciidoc xmlto docbook2x
 ```
+
 >使用 RHEL 和 RHEL 衍生版，如 CentOS 和 Scientific Linux 的用户需要 [开启 EPEL 库](https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F) 以便下载 `docbook2X` 包。
 >> CentOS
 >> 检查是否开启：`sudo yum install epel-release`
@@ -53,6 +61,7 @@ $ git clone git://git.kernel.org/pub/scm/git/git.git
 ```
 
 # 初次运行 Git 前的配置
+
 定制你的 Git 环境。 每台计算机上只需要配置一次，程序升级时会保留配置信息。
 
 Git 自带一个 [`git config`](https://git-scm.com/docs/git-config) 的工具来帮助设置控制 Git 外观和行为的配置变量。 这些变量存储在三个不同的位置：
@@ -73,6 +82,7 @@ John Doe
 $ git config --show-origin rerere.autoUpdate
 file:/home/johndoe/.gitconfig	false
 ```
+
 ## 用户信息
 
 安装完 Git 之后，要做的第一件事就是设置你的用户名和邮件地址。 这一点很重要，因为每一个 Git 提交都会使用这些信息，它们会写入到你的每一次提交中，不可更改：
@@ -99,6 +109,7 @@ $ git config --global core.editor emacs
 >如果你不这样设置编辑器，那么当 Git 试图启动它时你可能会被弄糊涂、不知所措。 例如，在 Windows 上 Git 在开始编辑时可能会过早地结束。
 
 # 离线获取帮助
+
 若你使用 Git 时需要获取帮助，有三种等价的方法可以找到 Git 命令的综合手册（manpage）：
 ```console
 $ git help <verb>
@@ -111,11 +122,13 @@ $ git help config
 ```
 
 # Git 命令
+
 `git init` 在已存在目录中初始化仓库
 `git clone` 克隆现有的仓库
 Git全指令参考：https://git-scm.com/docs
 
 # 常用操作
+
 - 获取 - 拉取 - 提交 - 推送 - [合并]
 - 可以在任一提交上创建新分支，推送是把指定的本地分支 同步到 指定的服务器分支
 - 提交后没有推送，可以重置分支来删除提交（可保持本地所有变动）
@@ -133,6 +146,7 @@ Git全指令参考：https://git-scm.com/docs
 - 贡献别人的项目：[Fork](https://git-scm.com/book/zh/v2/GitHub-%E5%AF%B9%E9%A1%B9%E7%9B%AE%E5%81%9A%E5%87%BA%E8%B4%A1%E7%8C%AE)
 
 # 相关链接
+
 Git官网：https://git-scm.com/
 Git开源地址：https://github.com/git/git
 从零开始：https://git-scm.com/book/zh/v2
