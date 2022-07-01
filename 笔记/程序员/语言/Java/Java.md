@@ -10,6 +10,89 @@ https://www.injdk.cn/
 xxx/em-sw/dev/master
 xxx/config name/文件后缀/分支
 
+# 自定义注解
+
+- 请求拦截器获取注释
+```java
+@Target({ElementType.METHOD,ElementType.TYPE})  
+@Retention(RetentionPolicy.RUNTIME)  
+	public @interface UserLoginToken {  
+}
+```
+```java
+//Controller GETMapping @UserLoginToken
+//MyInterceptor implements HandlerInterceptor preHandle
+if (!(handler instanceof HandlerMethod)) {  
+    return true;  
+}  
+HandlerMethod method = (HandlerMethod) handler;
+UserLoginToken methodAnnotation = method.getMethodAnnotation(UserLoginToken.class);
+UserLoginToken methodAnnotation  = method.getBeanType().getAnnotation(UserLoginToken.class);
+
+//@Configuration public class WebMvcConfiguration implements WebMvcConfigurer
+@Autowired  
+private AuditLogInterceptor auditLogInterceptor;
+@Override  
+public void addInterceptors(InterceptorRegistry registry) {  
+	registry.addInterceptor(myInterceptor).addPathPatterns("/**");
+}
+
+
+```
+
+
+
+
+引入 org.springframework.web.servlet.HandlerInterceptor 接口
+重写 preHandle postHandle afterCompletion 方法
+
+
+
+
+# 记录用户操作日志
+
+```java
+@Target({ElementType.METHOD})  
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Log {  
+    String value() default "";  
+}
+```
+```java
+@Component  
+@Aspect  
+public class LogAspect {
+
+	@Pointcut("@annotation( com.config.Log )")  
+	public void adminLogPoint() {  
+	}  
+	  
+	@Around("adminLogPoint()")  
+	public Object adminLogAround(ProceedingJoinPoint pjp) throws Throwable {  
+	    Object msg = pjp.proceed();  
+	    generateLog(pjp);  
+	    return msg;  
+	}
+
+	private void generateLog(ProceedingJoinPoint pjp) {
+		MethodSignature methodSignature = (MethodSignature) pjp.getSignature();  
+		Object[] args = pjp.getArgs();
+		Method method = methodSignature.getMethod();  
+		Log log = method.<Log>getAnnotation(Log.class);  
+		String logValue = log.value();
+		//...
+	}
+}
+```
+```java
+//使用，当调用这个方法时，会执行 generateLog 方法
+@Log("登录")  
+public ResponseEntity login() {  
+    return null;  
+}
+```
+
+
 # 启动参数调优
 调优的目的，减少full gc 造成的应用程序停顿（stw，Stop一the一World）（停止业务线程，专心垃圾回收）
 

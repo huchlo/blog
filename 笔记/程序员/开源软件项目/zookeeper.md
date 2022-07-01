@@ -74,7 +74,7 @@ weight.4=1
 ```
 [【ZooKeeper】配置文件详解_Young丶的博客-CSDN博客_zookeeper配置文件详解](https://blog.csdn.net/agonie201218/article/details/114637475)
 
-# zkCli.sh
+# bin/zkCli.sh
 ```bash
 #-server 默认 127.0.0.1:2181
 bin/zkCli.sh -server hostname:2181

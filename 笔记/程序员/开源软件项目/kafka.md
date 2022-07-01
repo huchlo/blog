@@ -1,5 +1,17 @@
 [apache kafka系列之server.properties配置文件参数说明_幽灵之使的博客-CSDN博客_server.properties 配置](https://blog.csdn.net/lizhitao/article/details/25667831)
 
+
+# bin/kafka-server-\*.sh
+```bash
+#启动服务
+bin/kafka-server-start.sh -daemon config/server.properties
+bin/kafka-server-start.sh -daemon config/kraft/server.properties
+#停止服务
+bin/kafka-server-stop.sh
+```
+
+# config/server.properties
+
 # kafka-kraft模式
 修改config/kraft下的配置文件
 >node.id
@@ -20,22 +32,9 @@ bin/kafka-storage.sh random-uuid
 bin/kafka-storage.sh format -t 6-_j0MqeQZ-zgyui5Mlw4w -c /opt/kafka_2.12-3.1.0/config/kraft/server.properties
 ```
 
-启动
-```bash
-bin/kafka-server-start.sh -daemon config/kraft/server.properties
-```
 
 # 认识
 作用：缓存/消峰，解耦，异步通讯
-
-启动
-```bash
-bin/kafka-server-start.sh -deamon config/kraft/server.properties
-```
-停止
-```bash
-bin/kafka-server-stop.sh
-```
 
 ## topic
 
@@ -60,7 +59,7 @@ bin/kafka-topics.sh --bootstrap-server com01:9092 --topic first --alter --partit
 ## console-producer
 
 ```bash
-bin/kafka-console-producer.sh --bootstrap-server com01:9092 -topic first
+bin/kafka-console-producer.sh --bootstrap-server com01:9092 --topic first
 ```
 
 
@@ -71,3 +70,4 @@ bin/kafka-console-producer.sh --bootstrap-server com01:9092 -topic first
 bin/kafka-console-consumer.sh --bootstrap-server com01:9092 -topic first --from-beginning
 ```
 
+#待整理
