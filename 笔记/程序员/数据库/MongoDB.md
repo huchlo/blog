@@ -1,6 +1,6 @@
-[Install MongoDB Community Edition on Red Hat or CentOS — MongoDB Manual](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-red-hat/)
+安装：https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-red-hat/
 
-# 设置dbpath
+# 启动服务
 进入bin中执行
 ```bash
 mongod --dbpath "db文件夹的url"

@@ -8,6 +8,7 @@
 - 后台启动redis服务
 编辑conf文件，将daemonize属性改为yes（表明需要在后台运行）
 再次启动redis服务ok
+
 # redis-cli
 ```bash
 redis-cli
