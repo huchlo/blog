@@ -43,3 +43,16 @@ SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
 
 不可重复读和幻读的区别是：不可重复读是指读到了已经提交的事务的更改数据(update)，幻读是指读到了其他已经提交事务的新增数据(insert或delete)。对于这两种问题解决采用不同的办法，防止读到更改数据，只需对操作的数据添加行级锁，防止操作中的数据发生变化;二防止读到新增数据，往往需要添加表级锁，将整张表锁定，防止新增数据(oracle采用多版本数据的方式实现)。
+
+```sql
+select
+
+(SELECT EXISTS(SELECT 1 FROM t_smartcare WHERE imei = t_device_wm.imei LIMIT 1)) as smartStatus,
+IF(expr1,expr2,expr3) as zxc, --如果expr1为true，返回expr2，否则expr3
+
+IFNULL(expr1,expr2) as asd, --如果expr1不为null则返回expr1，否则expr2
+
+
+
+from
+```

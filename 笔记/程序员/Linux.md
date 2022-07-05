@@ -288,7 +288,11 @@ http://lnmp.ailinux.net/ssh-keygen
 scp、rsync、xsyn 
 
 ```bash
-scp 文件夹or文件 root@192.168.121.134:/usr/loca
+scp 文件 root@10.0.0.3:/usr/local
+scp 文件夹 -r root@10.0.0.3:/usr/local 
+# -r 拷贝整个目录
+# -q 拷贝时，不显示提示信息
+# -p 保留源文件的建立时间
 ```
 
 rsync 远程同步工具 
