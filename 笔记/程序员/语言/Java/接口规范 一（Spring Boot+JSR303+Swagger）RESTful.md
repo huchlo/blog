@@ -124,6 +124,8 @@ public JsonResult handleException(Exception e) {
 Valid没有分组功能，可以用在成员属性上
 Validated有分组功能，不能用在成员属性上，其他一样
 # 异常处理
+全局异常捕获 @ControllerAdvice GlobalExceptionHandler
+
 ```java
 //示例
 @ExceptionHandler(Exception.class)  

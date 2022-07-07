@@ -96,4 +96,8 @@ cluster-node-timeout 15000 #互联超时阀值，毫秒
 普通主从，多slave主动同步单master数据，slave只读，master挂了就不能写入数据了，没有容错性，不予学习。
 ## Sentinel 模式
 
+
+
 ## Cluster 模式
+
+
