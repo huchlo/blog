@@ -33,6 +33,54 @@ make install
 配置文件放在conf
 命令在sbin/nginx
 
+# conf/nginx.conf
+- 结构
+```console
+http{
+	server{ 
+		listen       80;
+	    server_name  127.0.0.1;
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+        #资源
+        location / {
+        root C:\Users\longl\Videos;
+        autoindex on;                                  
+        autoindex_exact_size off;                
+        autoindex_localtime on;  
+        access_log   off;
+        expires      2d;
+        }
+	    ...
+ 	}
+	server{ 
+		listen       80;
+	    server_name  192.168.1.101;
+	    ...
+    }
+    server{
+	    listen       443 ssl;
+	    server_name  localhost;
+	    root html;
+        ssl_certificate      cert/2756403_api.data-school.cn.pem;
+        ssl_certificate_key  cert/2756403_api.data-school.cn.key;
+        ssl_session_cache    shared:SSL:1m;
+        ssl_session_timeout  5m;
+        ssl_ciphers  HIGH:!aNULL:!MD5;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers  on;
+        location / {
+            proxy_pass http://backServer/;
+            index  index.html index.htm;
+        }
+    }
+}
+```
+
+- 
+
 # 开启https
 在nginx的安装目录执行
 ```bash

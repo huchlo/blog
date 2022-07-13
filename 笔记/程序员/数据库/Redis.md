@@ -1,5 +1,5 @@
 
-# 启动 redis-server
+# redis-server
 
 ```bash
 ./redis-server #默认配置
@@ -21,6 +21,33 @@ redis-cli -a {password}
 echo "world" | redis-cli -x set hello #从标准输入读取数据作为该命令的最后一个参数
 redis-cli set hello world
 
+```
+
+# utils/redis_init_script
+linux系统启动时，redis初始化脚本的模板，编辑后cp到/etc/init.d下，主要修改REDISPORT、EXEC、CLIEXEC、CONF这几个参数，之后一般会把该脚本名mv成redis_{port}
+```bash
+#使用chkconfig命令，将redis添加进开机启动
+chkconfig --list # 查看服务
+
+#0：表示关机
+#1：单用户模式
+#2：无网络连接的多用户命令行模式
+#3：有网络连接的多用户命令行模式
+#4：不可用
+#5：带图形界面的多用户模式
+#6：重新启动
+
+chkconfig --add redis_6379 #添加进服务
+chkconfig redis_6379 on #设置开机启动，no对运行级2345有效
+# chkconfig [--level <等级代号>][系统服务][on/off/reset] 
+
+chkconfig --del name #删除服务
+```
+
+
+# console
+```bash
+
 redis> set foo bar
 OK
 redis> get foo
@@ -32,10 +59,17 @@ info [section] #返回redis服务器的各种信息,section 可选项
 #Memory 服务器内存
 #Persistence 持久化信息
 #Stats 通用统计数据
-#Replication 蛀虫复制相关信息
+#Replication 主从复制相关信息
 #CPU cpu使用情况
 #Cluster 集群信息
 #KeySpace 键值对统计数量信息
+
+slaveof 10.0.0.3 6379 # 成为10.0.0.3的从机
+slaveof no one # slave转master
+
+
+cluster info # 查看集群状态
+cluster nodes # 列出集群当前已知的所有节点
 ```
 
 # 安装
@@ -76,7 +110,7 @@ http://t.zoukankan.com/dw3306-p-12801566.html
 #安全通用设置
 bind 10.0.0.1 127.0.0.1 #访问通过这些ip，才被允许，0.0.0.0 代表所有
 requirepass password #密码
-protected-mode yes #默认开启
+protected-mode yes #守护进程模式，默认开启
 port 6379 #端口，默认6379
 
 daemonize yes #后台运行
@@ -93,11 +127,179 @@ cluster-node-timeout 15000 #互联超时阀值，毫秒
 ```
 
 # 集群
-普通主从，多slave主动同步单master数据，slave只读，master挂了就不能写入数据了，没有容错性，不予学习。
+普通主从，多slave主动同步单master数据，slave只读，master挂了就不能写入数据了，没有容错性，不予采用。
 ## Sentinel 模式
-
+在普通主从的基础上，启用单数个sentinel对redis集群的运行状况进行监控，当master挂点时，sentinel集群会选举一个slave成为master。
 
 
 ## Cluster 模式
 
+```bash
+# /redis-cli --cluster 
 
+#创建集群
+redis-cli --cluster create --cluster-replicas 1 10.12.58.7:6379 10.12.58.7:6380 10.12.58.9:6379 10.12.58.9:6380 10.12.58.10:6379 10.12.58.10:6380
+
+#检查集群
+redis-cli --cluster check 192.168.163.132:6384 --cluster-search-multiple-owners
+
+#查看集群
+redis-cli --cluster info 10.0.0.3:6379
+
+```
+
+```bash
+[app@localhost redis]<20220713 11:15:17>$ bin/redis-cli --cluster create --cluster-replicas 1 10.12.58.7:6379 10.12.58.7:6380 10.12.58.9:6379 10.12.58.9:6380 10.12.58.10:6379 10.12.58.10:6380 -a 'Z%(OSinLCi!sk*X3h#REDIS'
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 10.12.58.9:6380 to 10.12.58.7:6379
+Adding replica 10.12.58.7:6380 to 10.12.58.9:6379
+Adding replica 10.12.58.10:6380 to 10.12.58.10:6379
+>>> Trying to optimize slaves allocation for anti-affinity
+[OK] Perfect anti-affinity obtained!
+M: c22039dbf7f987668a537f92cec4863ed91122b8 10.12.58.7:6379
+   slots:[0-5460] (5461 slots) master
+S: 752bb07d902bf7fb8d760a7aaf1755c34ce062d9 10.12.58.7:6380
+   replicates c837f0d2ae44271a0dec546db0c72fbe0b4d0cfa
+M: c837f0d2ae44271a0dec546db0c72fbe0b4d0cfa 10.12.58.9:6379
+   slots:[5461-10922] (5462 slots) master
+S: 3da00450f06b132ac7c3d9ae6069721a3ee51dea 10.12.58.9:6380
+   replicates 02f0239c1014a51a590d4c0736aeb20a2b10b834
+M: 02f0239c1014a51a590d4c0736aeb20a2b10b834 10.12.58.10:6379
+   slots:[10923-16383] (5461 slots) master
+S: 8db1e4b294f83be39ca54a51447b25d1c6eac833 10.12.58.10:6380
+   replicates c22039dbf7f987668a537f92cec4863ed91122b8
+Can I set the above configuration? (type 'yes' to accept): yes
+>>> Nodes configuration updated
+>>> Assign a different config epoch to each node
+>>> Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+.....
+>>> Performing Cluster Check (using node 10.12.58.7:6379)
+M: c22039dbf7f987668a537f92cec4863ed91122b8 10.12.58.7:6379
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+S: 752bb07d902bf7fb8d760a7aaf1755c34ce062d9 10.12.58.7:6380
+   slots: (0 slots) slave
+   replicates c837f0d2ae44271a0dec546db0c72fbe0b4d0cfa
+M: 02f0239c1014a51a590d4c0736aeb20a2b10b834 10.12.58.10:6379
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+S: 8db1e4b294f83be39ca54a51447b25d1c6eac833 10.12.58.10:6380
+   slots: (0 slots) slave
+   replicates c22039dbf7f987668a537f92cec4863ed91122b8
+S: 3da00450f06b132ac7c3d9ae6069721a3ee51dea 10.12.58.9:6380
+   slots: (0 slots) slave
+   replicates 02f0239c1014a51a590d4c0736aeb20a2b10b834
+M: c837f0d2ae44271a0dec546db0c72fbe0b4d0cfa 10.12.58.9:6379
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+
+```
+
+
+```bash
+daemonize yes
+
+#绑定IP和端口看这里
+bind 0.0.0.0
+port 6379
+
+#db文件修改看这里
+dbfilename "dump_6379.rdb"
+dir "/tmp"
+rdbcompression yes
+rdbchecksum yes
+
+databases 16
+save 900 1
+save 300 10
+save 60 10000
+
+#TCP 监听的最大容纳数量
+tcp-backlog 511
+timeout 0
+tcp-keepalive 60
+
+#开启appendonly看这里
+appendonly no
+appendfilename "appendonly.aof"
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+
+#最大内存改这里
+#maxmemory 8GB
+#maxmemory-policy volatile-lru
+
+#绑定IP和端口看这里
+
+#pidfile修改看这里
+pidfile "/tmp/redis_6379.pid"
+#log修改看这里
+loglevel notice
+logfile "/tmp/redis_6379.log"
+
+#db文件修改看这里
+
+save 900 1
+save 300 10
+save 60 10000
+
+#TCP 监听的最大容纳数量
+
+#开启appendonly看这里
+
+#最大内存改这里
+#maxmemory 8GB
+#maxmemory-policy volatile-lru
+
+#客户端最大连接数改这里
+#maxclients 10000
+
+#主备配置改这里
+#slaveof ip:port
+#slave-serve-stale-data yes
+#slave-priority 100
+
+#密码认证改这里
+#masterauth redis
+#requirepass redis
+
+#集群配置改这里
+cluster-enabled yes
+cluster-node-timeout 15000
+cluster-config-file "nodes.conf"
+
+#其他优化配置
+lua-time-limit 5000
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+latency-monitor-threshold 0
+hash-max-ziplist-entries 512
+hash-max-ziplist-value 64
+list-max-ziplist-size -2
+list-compress-depth 0
+set-max-intset-entries 512
+zset-max-ziplist-entries 128
+zset-max-ziplist-value 64
+hll-sparse-max-bytes 3000
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit replica 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+aof-rewrite-incremental-fsync yes
+# Generated by CONFIG REWRITE
+masterauth "Z%(OSinLCi!sk*X3h#REDIS"
+requirepass "Z%(OSinLCi!sk*X3h#REDIS"
+
+```

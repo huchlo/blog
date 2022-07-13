@@ -15,12 +15,12 @@ lombok插件官网：https://projectlombok.org
 </dependencies>
 ```
 
-lombok稳定特性：https://projectlombok.org/features/all
+lombok稳定特性：https://projectlombok.org/features/all  
 lombok实验特性：https://projectlombok.org/features/experimental/all
 
 目前常用：
 # @Data
-https://projectlombok.org/features/Data
+https://projectlombok.org/features/Data  
 作用于类，是@ToString、@EqualsAndHashCode、@Getter、@Setter、@RequiredArgsConstructor、@EqualsAndHashCode,、@Value的集合
 - @Getter/@Setter https://projectlombok.org/features/GetterSetter
 - @ToString https://projectlombok.org/features/ToString
@@ -36,7 +36,7 @@ https://projectlombok.org/features/NonNull
 作用于方法的参数上，执行方法时该入参为Null，则会抛出NullPointerException
 
 # @Builder
-https://projectlombok.org/features/Builder
+https://projectlombok.org/features/Builder  
 作用于类，将类转变为建造者模式
 ```java
 Person.builder()
@@ -51,7 +51,7 @@ Person.builder()
 作用于静态或示例方法，与关键字`synchronized`的区别是，`synchronized`作用于this，@会为每个方法创建object锁
 
 # @Getter(lazy=true)
-https://projectlombok.org/features/GetterLazy
+https://projectlombok.org/features/GetterLazy  
 单例模式
 
 # @Log
@@ -81,6 +81,6 @@ private static final com.foo.your.Logger log = com.foo.your.LoggerFactory.create
 # @Cleanup
 自动关闭资源，针对实现了java.io.Closeable接口的对象有效，如：典型的IO流对象
 ```java
-@Cleanup InputStream in = **new** FileInputStream(args[0]);  
-@Cleanup OutputStream out = **new** FileOutputStream(args[1]);
+@Cleanup InputStream in = new FileInputStream(args[0]);  
+@Cleanup OutputStream out = new FileOutputStream(args[1]);
 ```

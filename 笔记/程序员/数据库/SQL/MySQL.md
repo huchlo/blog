@@ -65,9 +65,8 @@ rpm -e --nodeps mariadb-libs-xxx
 
 # 安装
 
-1. 下载rpm包
-https://dev.mysql.com/downloads/repo/yum/
-
+1. 下载rpm包  
+https://dev.mysql.com/downloads/repo/yum/  
 ```bash
 wget https://repo.mysql.com//mysql80-community-release-el7-6.noarch.rpm 
 ```
@@ -97,28 +96,34 @@ yum install mysql-community-server
 >`rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022`
 
 4. 启动服务
-启动mysql 
-`service mysqld start`
-`service start mysqld.service`
-`systemctl start mysqld`
-设置为开机启动
-`systemctl enable mysqld`
+启动mysql   
+`service mysqld start`  
+`service start mysqld.service`  
+`systemctl start mysqld`  
+设置为开机启动  
+`systemctl enable mysqld`  
 
-5. 使用（mysql8）
+5. 使用（mysql8） 
 查看初始密码
 ```bash
 sudo grep 'temporary password' /var/log/mysqld.log
 #A temporary password is generated for root@localhost: 6(HwM6_y??Zj
 ```
+
 登录
+
 ```
 mysql -uroot -p6(HwM6_y??Zj
 ```
+
 修改密码，密码太简单会报错
+
 ```bash
 alter user user() identified by 'An29_4&6ah+=';
 ```
+
 远程连接
+
 ```bash
 use mysql;
 select host,user,authentication_string,plugin from user;
@@ -128,3 +133,57 @@ update user set host='%' where user = 'root';
 flush privileges;
 ```
 
+安装后的my.cnf在/etc下
+
+# 设置主从
+编辑my.cnf
+```bash
+server_id=1 #集群中每台机的唯一标识
+log_bin=/var/log/mysql/mysql-bin.log #要将/var/log/mysql的拥有者设为mysql:mysql
+	#chown mysql:mysql -R /var/log/mysql
+# gtid_mode=ON
+# enforce_gtid_consistency=1
+# log_bin_trust_function_creators=1 # 默认为0，不设置为1，则不能创建function
+
+
+
+#仅在从机中设置，忽略同步的表
+replicate-wild-ignore-table=mysql.*
+replicate-wild-ignore-table=sys.*
+
+
+
+```
+
+>从机专属账户（也可以直接用root）
+>\>grant replication slave on *.* to 'rep'@'10.0.0.3' identified by '123456'
+>\>flush privileges;
+
+- 配置同步参数
+
+```bash
+mysql> change master to
+    -> master_host='10.12.58.7',
+    -> master_user='root',
+    -> master_password='Z%(OSinLCi!sk*X3h#MYSQL',
+    -> master_port=3306,
+    -> master_log_file='mysql-bin.000001',
+    -> master_log_pos=154;
+```
+
+执行change master 命令后的信息保存在/var/lib/mysql下的master.info和relay-log.info
+
+```bash
+ll /var/lib/mysql/*info
+```
+
+- 启动主从同步进程
+```bash
+# 启动主从同步进程
+mysql> start slave;
+# 检查状态
+mysql> show slave status \G
+	# Slave_IO_Running: Yes
+	# Slave_SQL_Running: Yes
+
+```
