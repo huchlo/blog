@@ -46,8 +46,17 @@ public void addInterceptors(InterceptorRegistry registry) {
 引入 org.springframework.web.servlet.HandlerInterceptor 接口
 重写 preHandle postHandle afterCompletion 方法
 
+# 远程调试
+jdk8，服务运行时，加上
 
+>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
 
+意为启用5005端口提供远程调试服务
+```bash
+nohup java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005  -jar xxx.jar  >/dev/null 2>&1 &
+```
+
+本机创建 Remote JVM Debug，设置好host、module，port默认为5005，打好断点运行即可。
 
 # 记录用户操作日志
 
@@ -128,7 +137,7 @@ jackson进行反序列化时，会将key进行String#intern，导致扫描时，
 -XX:MaxGCPauserMillis参数世家设置过小
 调大MaxGCPauserMillis值，将年轻代regin大小设置为固定值
 
-# mybatis
+# Mybatis
 REQUIRED 必须的
 ```xml
 <!ELEMENT select (#PCDATA | include | trim | where | set | foreach | choose | if | bind)*>

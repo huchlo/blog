@@ -187,3 +187,7 @@ mysql> show slave status \G
 	# Slave_SQL_Running: Yes
 
 ```
+
+# 时间相关
+- timestampdiff（unit，begin，end）
+unit为单位，如second、minute、hour等，(end-begin)的时间差
