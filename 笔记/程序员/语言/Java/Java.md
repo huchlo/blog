@@ -19,6 +19,7 @@ xxx/config name/文件后缀/分支
 	public @interface UserLoginToken {  
 }
 ```
+
 ```java
 //Controller GETMapping @UserLoginToken
 //MyInterceptor implements HandlerInterceptor preHandle
@@ -41,10 +42,9 @@ public void addInterceptors(InterceptorRegistry registry) {
 ```
 
 
-
-
 引入 org.springframework.web.servlet.HandlerInterceptor 接口
 重写 preHandle postHandle afterCompletion 方法
+
 
 # 远程调试
 jdk8，服务运行时，加上
