@@ -259,3 +259,13 @@ for (Map.Entry<String, String> entry:entryseSet) {
         });
     }
 ```
+
+# 类型转换
+
+```java
+String > char > int
+int num = Character.getNumericValue(str.charAt(i));
+
+int > char > String
+String str = Character.toString((char)(ch + '0'))
+```

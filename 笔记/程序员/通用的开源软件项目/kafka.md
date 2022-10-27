@@ -76,8 +76,13 @@ pratition越多，但broker的消息吞吐量越大，但过多的pratition会�
 
 ```bash
 bin/kafka-console-producer.sh --bootstrap-server com01:9092 --topic first
+
 echo 123 | bin/kafka-console-producer.sh --broker-list 10.12.58.3:9092 --topic test 
+
 echo asd 123 | bin/kafka-console-producer.sh --broker-list 10.12.58.3:9092 --topic test --property parse.key=true
+
+echo pid:123456\t123|bin/kafka-console-producer.sh --bootstrap-server 10.12.58.7:9092,10.12.58.9:9092,10.12.58.10:9092 --topic em_sw_push_data --property parse.headers=true --property headers.delimiter=\t
+
 ```
 
 
@@ -85,6 +90,8 @@ echo asd 123 | bin/kafka-console-producer.sh --broker-list 10.12.58.3:9092 --top
 
 ```bash
 bin/kafka-console-consumer.sh --bootstrap-server com01:9092 -topic first --from-beginning
+
+bin/kafka-console-consumer.sh --bootstrap-server 10.12.58.7:9092,10.12.58.9:9092,10.12.58.10:9092 --topic em_sw_push_data
 ```
 
 #待整理

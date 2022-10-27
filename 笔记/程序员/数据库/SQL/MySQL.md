@@ -12,8 +12,17 @@ offset大于10w，性能有明显的下降，建议使用id
 SELECT * FROM `talbe_name` WHERE id > 100000 LIMIT 10
 ```
 
+## 一些语句
+
+```sql
+INSERT INTO om_productdocument (type, filename, fileurl,onshow,sort_no,num) SELECT (CASE type WHEN 4 THEN 2 WHEN 5 THEN 1 WHEN 6 THEN 3 WHEN 7 THEN 0 END) 'type', filename, fileurl,onshow,sort_no,num FROM om_productfile WHERE type in (4,5,6,7);
+```
 ## 其他
 对于使用逻辑删除的相关表查询，最好使用视图
+
+## varchar长度
+长度<=64时，取2^n，varchar(8)、varchar(16)、varchar(32)、varchar(64)
+当长度>64时，取2^n-1，varchar(127)、varchar(255)、varchar(511)...
 
 # JSON数据类型
 ```sql
@@ -135,6 +144,77 @@ flush privileges;
 
 安装后的my.cnf在/etc下
 
+# windows安装
+解压缩
+       将下载到的文件解压缩到自己喜欢的位置，例如我自己的位置是D:\Program Files\mysql-5.7.10-winx64
+添加环境变量
+       右键计算机->属性->高级系统设置->环境变量；在系统变量里添加MYSQL_HOME环境变量，变量值为MySQL的根目录，例如我的是D:\Program Files\mysql-5.7.10-winx64（原路径有错，已更改，对受误导的网友表示抱歉。谢谢网友“庞大进”的提醒，2016.5.7）
+       找到path，选择编辑，在原有值末尾添加;%MYSQL_HOME%\bin
+添加配置文件生成的初始密码，记下来（因为有特殊字符，很容易记错，最好把整个消息保存在记事本里）4TSrgw;tyPaW
+如果上述命令运行不成功请用以下命令代替：
+%MYSQL_HOME%\bin\mysqld --initialize --user=mysql --console
+如果仍然不成功请检查第２步
+       在MySQL的安装目录（例如我的是D:\Program Files\mysql-5.7.10-winx64）下，建立新文本文件txt，并将其命名为my.ini（注意扩展名也要修改）。
+双击打开该文件，并在其中添加内容如下：
+[mysqld]
+basedir=D:\Program Files\mysql-5.7.10-winx64
+datadir=D:\Program Files\mysql-5.7.10-winx64\data
+port = 3306
+保存后关闭
+初始化数据库 
+       以管理员自身份打开CMD执行以下命令（注意必须以管理员身份打开，否则报错）
+mysqld --initialize --user=mysql --console
+在控制台消息尾部会出现随机
+将MySQL添加到系统服务
+       以管理员自身份打开CMD执行以下命令（注意必须以管理员身份打开，否则报错）
+mysqld --install MySQL
+net start MySQL
+安装成功，则显示“服务已启动成功”
+如果上述命令运行不成功，可以用以下命令代替：
+%MYSQL_HOME%\bin\mysqld --install MySQL
+net start MySQL
+(第２步改了之后，之前这里忘记了更改，谢谢网友穆novA的提醒，2016.6.12)
+安装成功，则显示“服务已启动成功”
+如果仍然不成功请检查第２步
+启动MySQL并修改密码
+       在CMD控制台里执行命令  mysql -u root -p
+回车执行后，输入刚才记录的随机密码
+执行成功后，控制台显示 mysql>，则表示进入mysql
+输入命令set password for root@localhost = password('123'); （注意分号）
+此时root用户的密码修改为123
+
+```bash
+C:\Windows\system32>mysqld --initialize --user=mysql --console
+mysqld: Can't create directory 'D:\mysql-5.7.13\data\' (Errcode: 2 - No such file or directory)
+2016-08-02T03:30:27.687838Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2016-08-02T03:30:27.859282Z 0 [ERROR] Can't find error-message file 'D:\mysql-5.7.13\share\errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2016-08-02T03:30:28.904014Z 0 [ERROR] Aborting
+```
+
+服务列表里没有MySQL服务，故出现该错误。请进入MySQL的bin目录，并在bin目录打开命令行窗口，在命令行窗口输入：mysqld --install，回车，提示：Service successfully installed。表示安装MySQL服务成功，命令行窗口输入：net start mysql ，可以正常启动。
+
+跳过权限检查启动MySQL，
+
+D:/MySQL/MySQL Server 5.0/bin/mysqld-nt –skip-grant-tables
+
+.重新打开一个CMD，进入D:/MySQL/MySQL Server 5.0/bin/，
+
+重设root密码
+
+D:/MySQL/MySQL Server 5.0/bin/mysqladmin -uroot flush-privileges password “newpassword”
+
+D:/MySQL/MySQL Server 5.0/bin/mysqladmin -u root -p shutdown
+
+将newpassword替换为你的新密码，第二个命令会让你重复输入一次新 密码。
+
+update mysql.user set authentication_string=password('123456') where user='root' and Host = 'localhost';
+
+删除服务
+mysqld --remove MySQL（服务名）
+
+mysql 远程登陆（不安全）
+修改mysql-user user=root行的host，localhost修改为%，再重启数据库
+
 # 设置主从
 编辑my.cnf
 ```bash
@@ -191,3 +271,50 @@ mysql> show slave status \G
 # 时间相关
 - timestampdiff（unit，begin，end）
 unit为单位，如second、minute、hour等，(end-begin)的时间差
+
+# 函数
+```sql
+CREATE DEFINER=`root`@`%` FUNCTION `函数名`(`入参` varchar(15)) RETURNS tinyint(4)
+BEGIN
+DECLARE vs tinyint DEFAULT 0;
+select LENGTH(入参) into vs；
+RETURN vs;
+END
+```
+
+# 存储过程
+参数模式，in、inout、out，in是入参，out是出参（默认最后会select一下所有out参数）
+```sql
+CREATE DEFINER=`root`@`%` PROCEDURE `过程名`(IN `aa` tinyint,INOUT `ss` tinyint,OUT `dd` tinyint)
+BEGIN
+	select 1;
+END
+```
+
+# 命令行
+```bash
+#mysql -uroot -p 进入之后
+show databases; #显示所有数据库
+use <数据库名>; #使用数据库
+select database(); #打印当前使用的数据库
+select version(); #打印数据库版本信息
+select now(); #打印数据库当前时间
+
+show tables; #显示当前数据库的所有表
+```
+
+# 备份与恢复
+```bash
+mysqldump -uroot -p [数据库名] > [文件]
+mysqldump -uroot -p ss > /root/ss.db
+
+#恢复
+#数据库要线创建好
+mysql -uroot -p ss_gansu_20221010 < /home/app/ss_gansu_20221010.db
+
+mysql -u'root' -p'password'
+mysql> create database abc; # 创建数据库 
+mysql> use abc; # 使用已创建的数据库 
+mysql> set names utf8; # 设置编码 
+mysql> source /home/abc/abc.sql # 导入备份数据库
+```

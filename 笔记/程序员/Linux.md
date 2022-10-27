@@ -36,7 +36,7 @@ chmod 764 /root/test #设置权限
 vi vim filename i :wq :q! :w! #文本编辑器
 touch filename1 filename2 #创建文件，更新文件时间标签
 
-more filename #按页显示文本文件的内容，替换cat
+more filename #按页显示文本文件的内容，替换cat，space下一屏，b上一屏
 head -c 6 filename #显示头部内容
 tail -f filename #查看尾部内容，-f 显示最新追加的内容
 
@@ -70,6 +70,9 @@ uname -a # 查看内核/操作系统/CPU信息的linux系统信息命令
 head -n 1 /etc/issue # 查看操作系统版本，是数字1不是字母L
 cat /proc/cpuinfo # 查看CPU信息的linux系统信息命令
 hostname # 查看计算机名的linux系统信息命令
+#cat /etc/redhat-release #查看centos系统版本
+#cat /etc/centos-release
+#cat /etc/system-release
 lspci -tv # 列出所有PCI设备
 lsusb -tv # 列出所有USB设备的linux系统信息命令
 lsmod # 列出加载的内核模块
@@ -121,6 +124,11 @@ cat /proc/swaps ：查看所有swap分区的信息
 tar -xvf FileName.tar
 tar -xzvf  FileName.tar.gz
 tar -jxvf FileName.tar.bz2
+
+tar cvf xx.tar 待压缩的文件或文件夹
+
+yum install unzip
+unzip xxx.zip #解压到当前目录
 ```
 [tar命令打包解压示例 - Linux命令大全教程™ (yiibai.com)](https://www.yiibai.com/linux/tar.html)
 
@@ -313,12 +321,22 @@ xsync脚本基于rsync工具
 ...
 ```
 
+sftp
+```bash
+ls
+cd
+lcd #本地 local
+pwd
+lpwd #本地 local
+put E:/worksourcetree/xiaoyuan/demo/asd.txt
+get E:/worksourcetree/xiaoyuan/demo/asd.txt
+```
 # Shell脚本
 shell解释器：`/bin/sh` `/bin/bash`，bash是sh的增强版本，文件后缀名都是 sh。
 第一行必须为“#！/bin/bash”，脚本声明(#!)用来告诉系统使用哪种Shell解释器来执行该脚本。
 第一行以后可以添加注释信息（#）对脚本功能和某些命令的介绍信息，使得自己或他人在日后看到这个脚本内容时，可以快速知道该脚本的作用或一些警告信息。
 ```bash
-＃!/bin/bash
+#!/bin/bash
 echo Hello World! # 输出：Hello World!
 var1="变量" # ''会使变量无效，无引号和""可以有变量
 for var1 in `ls /etc`
@@ -416,6 +434,17 @@ https://www.runoob.com/linux/linux-shell-io-redirections.html
 chmod u+x \*.sh # 提示权限不足，需要给脚本文件增加执行权限即可
 ```
 
+
+# 系统定时任务与策略
+```bash
+#用户的定时任务
+crontab -l #查看当前用户定时策略
+crontab -e #编辑当前的用户的定时策略
+/var/spool/cron #该文件夹下存放着所有用户的定时策略
+
+#系统的定时任务 
+vim /etc/crontab #需要root权限
+```
 
 # VMware Workstation 虚拟机网络配置
 
