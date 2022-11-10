@@ -2,6 +2,15 @@
 ```java
 List<Integer> list = Arrays.asList(1,2,3);
 List<Integer> list = Collections.singletonList(123);
+//拼接list
+List<Integer> list1 = Arrays.asList(1,2,3);  
+List<Integer> list2 = Arrays.asList(4,5,6,6,7,2);  
+List<Integer> list3 = Arrays.asList(7,8,9);  
+List<Integer> list = Stream.of(list1,list2,list3).flatMap(Collection::stream).collect(Collectors.toList());
+//list去重
+List<Integer> list= new ArrayList<>(new  HashSet<>(list2)); //无序效率最高
+List<Integer> list= new ArrayList<>(new  TreeSet<>(list2)); //有序效率最高
+List<Integer> list= list2.stream().distinct().collect(Collectors.toList());//java8stream特性,有序，效率一般
 //Java中遍历Map的两种方法：keySet和entrySet
 Set<String> set = map.keySet();   
 for (String s:set) {  
