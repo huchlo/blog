@@ -17,6 +17,9 @@ npm install <package-name>
 # -g 默认将软件包安装到当前文件树的node_modules子文件夹下，使用-g会安装到全局位置
 
 npm root -g #查看全局的node_modules位置
+npm config ls -l #查看所有配置项
+npm config edit #打开配置文件，可编辑
+npm config set xxx xxx #设置配置
 
 npm update
 npm update <package-name>

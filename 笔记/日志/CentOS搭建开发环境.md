@@ -572,7 +572,7 @@ export PATH=$PATH:$NODE_HOME/bin:$NODE_GLOBAL_MODEL/bin:$YARN_INSTALL/bin
 
 配置 `~/.npmrc`、`/usr/local/share/.yarnrc`
 
-```sh
+```bash
 npm config set prefix "/usr/local/nodejs/node_global"
 npm config set cache "/usr/local/nodejs/node_cache"
 npm config set registry "http://mirrors.cloud.tencent.com/npm/"

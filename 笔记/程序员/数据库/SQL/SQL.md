@@ -53,6 +53,7 @@ SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 select
 
 (SELECT EXISTS(SELECT 1 FROM t_smartcare WHERE imei = t_device_wm.imei LIMIT 1)) as smartStatus,
+
 IF(expr1,expr2,expr3) as zxc, --如果expr1为true，返回expr2，否则expr3
 
 IFNULL(expr1,expr2) as asd, --如果expr1不为null则返回expr1，否则expr2
