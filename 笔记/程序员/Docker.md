@@ -94,3 +94,7 @@ https://hub.docker.com/_/mysql
 解决： 安装vi、vim
 apt-get update
 apt-get install vim
+
+# nginx
+html: /usr/share/nginx/html
+conf: /etc/nginx/nginx.conf

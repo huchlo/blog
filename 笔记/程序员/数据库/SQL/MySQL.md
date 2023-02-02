@@ -12,11 +12,6 @@ offset大于10w，性能有明显的下降，建议使用id
 SELECT * FROM `talbe_name` WHERE id > 100000 LIMIT 10
 ```
 
-## 一些语句
-
-```sql
-INSERT INTO om_productdocument (type, filename, fileurl,onshow,sort_no,num) SELECT (CASE type WHEN 4 THEN 2 WHEN 5 THEN 1 WHEN 6 THEN 3 WHEN 7 THEN 0 END) 'type', filename, fileurl,onshow,sort_no,num FROM om_productfile WHERE type in (4,5,6,7);
-```
 ## 其他
 对于使用逻辑删除的相关表查询，最好使用视图
 
@@ -307,9 +302,10 @@ show tables; #显示当前数据库的所有表
 ```bash
 mysqldump -uroot -p [数据库名] > [文件]
 mysqldump -uroot -p ss > /root/ss.db
+#mysqldump -uroot -p'password' -h127.0.0.1 --all-databases > /root/ss.db
 
 #恢复
-#数据库要线创建好
+#数据库要先创建好
 mysql -uroot -p ss_gansu_20221010 < /home/app/ss_gansu_20221010.db
 
 mysql -u'root' -p'password'
@@ -317,4 +313,30 @@ mysql> create database abc; # 创建数据库
 mysql> use abc; # 使用已创建的数据库 
 mysql> set names utf8; # 设置编码 
 mysql> source /home/abc/abc.sql # 导入备份数据库
+```
+
+# 从主从同步错误恢复
+```bash
+主 show master status; #查看主库状态
+从 show slave \G; #查看slave状态
+
+#忽略错误，继续同步
+##解析binlog，可以看到执行错误的sql语句
+mysqlbinlog -v --stop-position=123 mysql-bin.000001 > /tmpbinlog.log
+
+主 flush tables with read lock;
+从 stop slave;
+从 set global sql_slave_skip_counter=1; #跳过1次错误
+从 start slave; #手动修改从库后，启用
+
+#重新导入数据，重新同步
+主 flush tables with read lock;
+#主mysqldump导出，然后从source导入（如果是单库，先use，后source）
+#mysqldump -uroot -p -hlocalhost --all-databases > mysql.db
+#scp mysql.sql root@10.6.97.134:/tmp/
+从 stop slave；
+从 source
+从 change #查询主库的status，之前可以reset slave;或reset slave all;一下 
+从 start slave;
+主 unlock tables;
 ```

@@ -62,3 +62,15 @@ IFNULL(expr1,expr2) as asd, --如果expr1不为null则返回expr1，否则expr2
 
 from
 ```
+
+# 方法
+获取当前日期
+`SELECT current_date();`
+`# 2023-01-09`
+
+字符串替换
+`SELECT REPLACE(current_date(),'-','');`
+`20230109`
+
+查询后插入
+`INSERT INTO table (sn,p1,p2) select sn,'qq','tt' from table2;`
