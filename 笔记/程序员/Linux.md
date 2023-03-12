@@ -58,6 +58,9 @@ logout #退出当前登录的shell
 
 nohup # 将程序以忽略挂起信号的方式运行,被运行的程序的输出信息将不会显示到终端
 nohup java -jar xxx >/dev/null 2>&1 &
+
+ln --help
+ln -s [source] [tagert] # 软连接
 ```
 
 ## 查看系统相关命令
@@ -147,7 +150,11 @@ yum remove <package_name>
 替换之后记得 `yum makecache`
 
 ### `systemd`
-在systemd中，所有的服务脚本都称为unit，主要分成6类：.service, .socket, .target, .path, snapshot, .timer，它们都存放在/usr/lib/systemd/system/目录中
+
+在systemd中，所有的服务脚本都称为unit，主要分成6类：.service, .socket, .target, .path, snapshot, .timer，它们都存放在/usr/lib/systemd/system/
+（/lib/systemd/system
+/etc/systemd/system）目录中
+
 #systemctl
 systemctl是 Systemd 的主命令，用于管理系统，统一采用systemctl命令来管理所有的服务
 ```
@@ -285,7 +292,9 @@ ssh-keygen -t rsa
 ssh-keygen -t dsa
 - 把本地主机的公钥复制到远程主机的authorized_keys文件上
 ssh-copy-id root@com01
+ssh-copy-id -i id_rsa.pub root@com01
 需要输入com01的密码
+运行之后ssh登录如果还需要密码，去检查ssh日志 /var/log/secure ,一般是因为/root目录的权限不够（root用户登录），chmod 750 root
 - 本机ssh免密
 ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
 cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys

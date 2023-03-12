@@ -24,6 +24,15 @@ width: 10px; //需要固定宽度
 flex: 1 1 0%; //弹性布局也需要固定宽度
 ```
 
+- 文字超出两行省略... 
+```css
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+```
+
 - 图片和文字水平
 ```html
 <span style="vertical-align: middle;">
@@ -32,3 +41,9 @@ flex: 1 1 0%; //弹性布局也需要固定宽度
 <span style="vertical-align: middle;">text</span>
 ```
 
+- grid自适应最小宽度
+```css
+display: grid;
+grid-template-rows: min-content repeat(2, auto);
+
+```

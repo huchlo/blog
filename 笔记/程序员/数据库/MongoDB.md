@@ -1,4 +1,5 @@
-安装：https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-red-hat/
+# 安装
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-red-hat/
 
 # 启动服务
 进入bin中执行
@@ -62,7 +63,8 @@ ssl=false 不启用ssl
 # 命令行操作mongodb
 
 1. 连接
-`/usr/bin/mongo`
+`mongosh`
+`/usr/bin/mongo*`
 2. 基本命令
 ```bash
 db.version() #版本
