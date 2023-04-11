@@ -98,3 +98,8 @@ apt-get install vim
 # nginx
 html: /usr/share/nginx/html
 conf: /etc/nginx/nginx.conf
+
+# redis
+```dockerfile
+/usr/local/etc/redis/redis.conf
+```
