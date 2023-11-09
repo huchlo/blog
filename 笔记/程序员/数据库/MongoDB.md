@@ -103,3 +103,6 @@ mongoimport -h 127.0.0.1:27017 -d 数据库名 -c 表名 /home/data/user.json
 ```
 
 [mongodump — MongoDB Database Tools](https://www.mongodb.com/docs/database-tools/mongodump/#mongodb-binary-bin.mongodump)
+
+# Install `mongosh`
+https://www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install

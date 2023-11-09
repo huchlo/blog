@@ -70,6 +70,10 @@ slaveof no one # slave转master
 
 cluster info # 查看集群状态
 cluster nodes # 列出集群当前已知的所有节点
+
+
+SCAN 0 MATCH abc:* #查看以asd:开头的key个数
+
 ```
 
 # 安装
@@ -219,6 +223,7 @@ rdbcompression yes
 rdbchecksum yes
 
 databases 16
+#rdb
 save 900 1
 save 300 10
 save 60 10000
@@ -231,6 +236,7 @@ tcp-keepalive 60
 #开启appendonly看这里
 appendonly no
 appendfilename "appendonly.aof"
+#aof
 appendfsync everysec
 no-appendfsync-on-rewrite no
 auto-aof-rewrite-percentage 100
@@ -302,4 +308,43 @@ aof-rewrite-incremental-fsync yes
 masterauth "Z%(OSinLCi!sk*X3h#REDIS"
 requirepass "Z%(OSinLCi!sk*X3h#REDIS"
 
+```
+
+# 数据持久化
+
+RDB 持久化（Redis Database Backup file）、 AOF 持久化（Append Only File）
+
+|   | RDB   | AOF   |
+| --- | --- | --- |
+|  持久化方式  | 定时对整个内存做快照   | 记录每一次执行的命令   |
+| 数据完整性   | 不完整，两次备份之间会丢失   | 相对完整，取决于刷盘策略   |
+| 文件大小   | 会有压缩，文件体积大小   | 记录命令，文件体积大   |
+| 宕机回复速度   | 很快   | 慢   |
+| 数据恢复优先级   | 低   | 高   |
+| 系统资源占用   | 高，大量的cpu和内存消耗   | 低，主要是磁盘io，但aof重写时会占用大量cpu和内存资源   |
+| 使用场景   | 可以容忍数分钟的数据丢失，更快的启动速度   | 对数据完整性要求较高   |
+
+
+```bash
+dbfilename "dump_6379.rdb"
+dir "/tmp"
+rdbcompression yes
+rdbchecksum yes
+#rdb
+save 900 1 #在900秒(15分钟)之后，如果至少有1个key发生变化，则dump内存快照
+save 300 10 #在300秒(5分钟)之后，如果至少有10个key发生变化，则dump内存快照
+save 60 10000 #在60秒(1分钟)之后，如果至少有10000个key发生变化，则dump内存快照
+```
+
+```bash
+#开启appendonly看这里
+appendonly yes
+appendfilename "appendonly.aof"
+#aof
+appendfsync everysec #每秒钟同步一次，该策略为AOF的缺省策略
+#appendfsync no #从不同步
+#appendfsync always #每次有数据修改发生时都会写入AOF文件
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
 ```

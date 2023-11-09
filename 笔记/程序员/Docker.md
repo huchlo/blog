@@ -103,3 +103,29 @@ conf: /etc/nginx/nginx.conf
 ```dockerfile
 /usr/local/etc/redis/redis.conf
 ```
+
+# 在Docker Desktop中使用Kubernetes
+
+1. 在设置中开启Kubernetes，会自动下载
+2. 开启后，可使用 `kubectl cluster-info` 看到集群的信息，使用 `kubectl proxy` 在本地启动一个代理服务器
+3. 如果代理服务没有图形化界面
+
+```bash
+#在集群中创建Kubernetes Dashboard的部署
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+#检查Kubernetes Dashboard的部署状态，等待一段时间，直到所有的Pod都处于"Running"状态。
+kubectl get pods -n kubernetes-dashboard
+#最后再使用 kubectl proxy
+#再访问 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+```
+4. 创建登录账户
+[dashboard/docs/user/access-control/creating-sample-user.md at master · kubernetes/dashboard · GitHub](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md)
+
+```bash
+# Creating a Service Account
+kubectl apply -f .\dashboard-adminuser.yaml
+# Creating a ClusterRoleBinding，没有创建这个会有问题
+kubectl apply -f .\dashboard-cluster-role-binding.yaml
+# Getting a Bearer Token for ServiceAccount，获取token
+kubectl -n kubernetes-dashboard create token admin-user
+```
