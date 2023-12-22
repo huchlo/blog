@@ -92,6 +92,7 @@ db.asd.remove(<query>,justOne<boolean>) #删除数据,justOne,是否只删除一
 ```bash
 #备份 数据库
 mongodump -h 127.0.0.1:27017 -d 数据库名 -o /home/data
+mongodump -h 10.0.17.28:27017 --username sgame --password look2022 -d db_sgame_oss -c t_login_log --query '{ "dtime": { "$gte": "2023-12-15 00:00:00" } }' -o /home
 #恢复 数据库
 mongorestore -h 127.0.0.1:27017 -d 恢复的数据库名 /home/data
 

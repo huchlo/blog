@@ -83,6 +83,7 @@ wget http://download.redis.io/releases/redis-5.0.4.tar.gz
 tar xzf redis-5.0.4.tar.gz
 cd redis-5.0.4
 make
+#执行`make install`命令后，默认情况下，Redis将被安装到`/usr/local/bin`目录下 
 ```
 编译依赖gcc，检查：`rpm -qa | grep gcc`，安装：`yum -y gcc`
 编译完成后，在Src目录下，有四个可执行文件redis-server、redis-benchmark、redis-cli和redis.conf。然后拷贝到一个目录下。之前的包就没用了，只要这些文件，且若没设置则数据存在当前目录

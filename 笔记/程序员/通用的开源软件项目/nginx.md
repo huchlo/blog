@@ -79,7 +79,8 @@ http{
 }
 ```
 
-- 
+- # proxy_pass 
+
 
 # 开启https
 在nginx的安装目录执行
