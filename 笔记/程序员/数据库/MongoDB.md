@@ -88,6 +88,17 @@ db.asd.remove({'asd':123}) #删除符合的所有数据
 db.asd.remove(<query>,justOne<boolean>) #删除数据,justOne,是否只删除一个文档，默认为false
 ```
 
+```bash
+db.t_gold_log.getIndexes()
+db.t_gold_log.totalIndexSize()
+db.t_gold_log.stats().indexSizes
+db.t_gold_log.ensureIndex({chg_reason:1})
+db.t_gold_log.ensureIndex({chg_reason:1},{unique:true})
+db.t_gold_log.reIndex()
+db.t_gold_log.ensureIndex({rid:1}) //创建索引
+db.t_gold_log.dropIndex({chg_reason:1})
+```
+
 3. 备份与恢复
 ```bash
 #备份 数据库

@@ -6,6 +6,7 @@ insert into tableName (name) values('a'),('b');
 update tableName set name = 'haha';
 delete from tableName [WHERE Clause]
 
+
 show table status like 'tableName'; #表信息
 show create table tableName; #表结构
 show indexes from tableName from databaseName; #表索引信息
@@ -62,6 +63,7 @@ mysql -uroot -p ss_gansu_20221010 < /home/app/ss_gansu_20221010.db
 mysql -u'root' -p'password'
 mysql> create database abc; # 创建数据库 
 mysql> use abc; # 使用已创建的数据库 
+show variables like 'char%';
 mysql> set names utf8; # 设置编码 
 mysql> source /home/abc/abc.sql # 导入备份数据库
 ```

@@ -12,10 +12,25 @@
 故在网上找到解决方案：[Let's Encrypt 使用教程，免费的SSL证书，让你的网站拥抱 HTTPS - Diamond-Blog (diamondfsd.com)](https://diamondfsd.com/lets-encrytp-hand-https/)
 
 ```
+# 网站类证书
 certbot certonly --webroot -w /var/www/example -d example.com -d www.example.com
 certbot certonly --webroot -w /data/app/GameH5/client_web -d "wss.blazeze.com"
 certbot certonly --webroot -w /data/app/GameH5/client_web -d "h5cdn.blazeze.com"
 certbot certonly --webroot -w /data/app/GmWebSGame/dist -d "ligen9527.haoyue888.io"
+certbot certonly --webroot -w /data/app/GmWebSGame/dist -d "clirep.haoyue888.io"
+/etc/letsencrypt/live/ligen9527.haoyue888.io/fullchain.pem;
+
+# 应用类证书
+certbot certonly --standalone -d wss.blazeze.com
+
+# 自动更新服务器webroot方式的证书
+certbot renew --dry-run
+
+# 自动更新服务器standalone方式的证书
+# 需占用80和443端口，所以要先停止nginx服务
+certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
+
+
 ```
 	
 	注意：

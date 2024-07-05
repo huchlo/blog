@@ -4,6 +4,10 @@
 \#/usr/local/nginx/sbin/nginx -s reopen            # 重启 Nginx
 \#/usr/local/nginx/sbin/nginx -s stop              # 停止 Nginx
 
+nginx -t -c nginx.conf
+nginx -c nginx.conf
+
+
 # 安装
 安装依赖
 ```bash
