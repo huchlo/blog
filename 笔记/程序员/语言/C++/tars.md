@@ -6,12 +6,12 @@ trpc：[介绍 | tRPC](https://trpc.group/zh/docs/what-is-trpc/)
 
 	不使用mysql，不使用framework，只用TarsCpp创建服务，linux环境下开发
 
-编译环境 centos 7.9
+## 编译环境 centos 7.9
 >centos: yum install -y glibx-devel gcc gcc-c++ bison flex which psmisc ncurses-devel zlib-devel git wget 
 
 >ubuntu: sudo apt-get install -y build-essential bison flex psmisc libncurses5-dev-zlib1g-dev get wget
 
-下载编译cmake
+## 下载编译cmake
 环境:yum install openssl-devel
 官网： https://cmake.org/download/
 目前最新版本： http://github.com/Kitware/CMake/releases/download/v3.30.0/cmake-3.30.0.tar.gz
@@ -22,7 +22,7 @@ cd cmake.xxx
 make
 make install
 
-
+## 安装tarscpp
 ```sh
 git clone https://github.com/TarsCloud/TarsCpp.git --recursive
 cd TarsCpp;
@@ -41,5 +41,8 @@ cmake_http_server.sh
 cmake_tars_server.sh
 create_http_server.sh
 create_tars_server.sh
+# xxx.sh App Server Servant
+# xxx.sh TestApp HelloServer Hello
+# 编译后，一个Server为一个执行文件
 ```
 
