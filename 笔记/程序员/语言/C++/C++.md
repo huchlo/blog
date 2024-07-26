@@ -18,14 +18,15 @@ int& x = y;
 //数组中的指针
 //string中的char指针
 string x = "asd";
-//定义a指针指向x的第一个字符a
+//定义临时a指针指向x的第一个字符a，C语言中的字符串表示
 char* a = x.c_str(); 
+char* a = x.data(); //与c_str相等
 //指针移动，当a+1时，则指向下一位s
 char* b = a+1; 
 //运算，b-a=1，会自动转为long值计算
 ```
 字符串即一个字符数组，各字符的内存地址相连，初始化字符串时会根据字符串长度分配一段内存地址，string a = "123";当a+="s"时，如果a所分配的内存不足以容纳更长的字符串，`std::string`会重新分配足够的内存空间
-## 函数
+## 数据处理函数
 ```c
 //比较俩字符串头number个字符是否相等，相等则s=0，n可以大于前面字符串长度
 auto s = strncasecmp("Hello", "Hello", n);
@@ -54,5 +55,8 @@ zz[3] = 0; //230\000\066\067 对指针来说，字符串被截断了，0为结�
 std::string sBuf;  
 sBuf.assign(cStr);// 赋值cStr
 sBuf.assign(cStr, 5);// 赋值cStr的前5个字符  
+//将内存块中的每个字节设置为指定的值，s指针 ch设置的字符 n设置的数量
+void *memset(void *s, int ch, size_t n);
 
 ```
+

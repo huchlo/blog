@@ -38,6 +38,7 @@ GDB是GNU调试器，用于调试C和C++程序。GDB提供的命令有很多，�
 - `return`：指定函数返回值并结束函数执行。
 5. 查看变量：
 - `print(p)`：打印变量的值。
+- `ptype(pt)`：打印变量的值。
 - `info(i) locals`：查看当前栈帧的所有变量。
 6. 修改变量：
 - `set var=value`：修改变量的值。
@@ -46,6 +47,16 @@ GDB是GNU调试器，用于调试C和C++程序。GDB提供的命令有很多，�
 - `frame`：切换堆栈帧。
 - `quit(q)`：退出GDB。
 - `help`：获取帮助信息。
+```
+
+## 设置print的文本长度
+```sh
+### 查看当前设置
+show print elements
+### 设置打印的文本长度
+set print elements 300
+### 设置打印长度无限制
+set print elements 0
 ```
 
 # 在vscode中使用gdb
