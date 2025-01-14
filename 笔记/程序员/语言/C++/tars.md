@@ -49,3 +49,6 @@ create_tars_server.sh
 # 编译后，一个Server为一个执行文件
 ```
 
+
+修改编译级别
+/usr/local/tars/cpp/makefile/makefile.tars

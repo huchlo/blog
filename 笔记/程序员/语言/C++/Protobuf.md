@@ -20,7 +20,7 @@ protoc -I=./ --cpp_out=./ *.proto
 
 #编译*.proto，输出 {package}/*.java文件
 #编译CSProto.proto，输出到./当前目录
-protoc --java_out=./ CSProto.proto
+protoc --java_out=./ GameProto.proto
 #编译当前目录的所有.proto文件，并输出到当前目录
 protoc -I=./ --java_out=./ *.proto
 
@@ -44,10 +44,11 @@ npm i protobufjs-cli -g
 # proto to js
 pbjs -t static-module -w commonjs -o CSProto.js CSProto.proto
 pbjs -t static-module -w commonjs -o TestProto.js TestProto.proto
+pbjs -t static-module -w commonjs -o GameProto.js GameProto.proto
 # js to ts
 pbts -o CSProto.d.ts CSProto.js
 pbts -o TestProto.d.ts TestProto.js
-
+pbts -o GameProto.d.ts GameProto.js
 #得到CSProto.d.ts CSProto.js文件
 ```
 

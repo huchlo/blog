@@ -86,7 +86,15 @@ http{
 - # proxy_pass 
 
 
-# 开启https
+
+
+# nginx模块
+查看安装的模块 `nginx -V`
+```bash
+configure arguments: --with-cc=cl --builddir=objs.msvc8 --with-debug --prefix= --conf-path=conf/nginx.conf --pid-path=logs/nginx.pid --http-log-path=logs/access.log --error-log-path=logs/error.log --sbin-path=nginx.exe --http-client-body-temp-path=temp/client_body_temp --http-proxy-temp-path=temp/proxy_temp --http-fastcgi-temp-path=temp/fastcgi_temp --http-scgi-temp-path=temp/scgi_temp --http-uwsgi-temp-path=temp/uwsgi_temp --with-cc-opt=-DFD_SETSIZE=1024 --with-pcre=objs.msvc8/lib/pcre2-10.39 --with-zlib=objs.msvc8/lib/zlib-1.3.1 --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_stub_status_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_slice_module --with-mail --with-stream --with-stream_realip_module --with-stream_ssl_preread_module --with-openssl=objs.msvc8/lib/openssl-3.0.14 --with-openssl-opt='no-asm no-tests -D_WIN32_WINNT=0x0501' --with-http_ssl_module --with-mail_ssl_module --with-stream_ssl_module
+```
+
+## 开启https
 在nginx的安装目录执行
 ```bash
 ./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module
@@ -95,3 +103,56 @@ make
 ```
 如果报错 ./configure: error: SSL modules require the OpenSSL library.则需要安装openssl模块
 `yum -y install openssl openssl-devel`
+
+## lua脚本
+
+```bash
+# 下载LuaJIT
+wget https://github.com/LuaJIT/LuaJIT/archive/refs/tags/v2.1.ROLLING.tar.gz
+# 下载ngx_devel_kit
+wget https://github.com/vision5/ngx_devel_kit/archive/refs/tags/v0.3.1.tar.gz
+# 下载lua-nginx-module v0.10.27对应nginx1.27 同理 v0.10.20对应nginx1.20
+wget https://github.com/openresty/lua-nginx-module/archive/refs/tags/v0.10.27.tar.gz
+wget https://github.com/openresty/lua-nginx-module/archive/refs/tags/v0.10.20.tar.gz
+# \lib\resty\core\base.lua 查看对应lua-nginx-module版本
+wget https://github.com/openresty/lua-resty-core/archive/refs/tags/v0.1.22.tar.gz
+wget https://github.com/openresty/lua-resty-lrucache/archive/refs/tags/v0.15.tar.gz
+
+tar -xzvf  xxx.tar.gz
+
+cd LuaJIT-2.1.ROLLING
+make PREFIX=/usr/local/luajit install
+ln -sf /usr/local/luajit/bin/luajit-2.1. /usr/local/bin/luajit
+luajit -v
+
+echo "export LUAJIT_LIB=/usr/local/luajit/lib" >> /etc/profile
+echo "export LUAJIT_INC=/usr/local/luajit/include/luajit-2.1" >> /etc/profile
+source /etc/profile
+
+ln -sf /usr/local/luajit/lib/libluajit-5.1.so.2 /usr/local/lib/libluajit-5.1.so.2
+
+cd nginx-1.26.0  # 假设nginx源码位于nginx-1.26.0文件夹
+./configure ... --add-module=/root/install/web_spec_ini/nginx-1.20.1/lua_module/ngx_devel_kit-0.3.1 --add-module=/root/install/web_spec_ini/nginx-1.20.1/lua_module/lua-nginx-module-0.10.20
+--add-dynamic-module=/root/install/web_spec_ini/nginx-1.20.1/lua_module/lua-nginx-module-0.10.20 
+#1 修改ld.so.conf就不用添加这个选项
+--with-ld-opt="-Wl,-rpath,/usr/local/luajit/lib,--as-needed,-O1,--sort-common" 
+#2
+echo "/usr/local/luajit/lib" >> /etc/ld.so.conf
+ldconfig
+
+ldd $(which nginx)
+nginx -V
+
+lua_package_path '/root/install/web_spec_ini/nginx-1.20.1/lua_module/lua-resty-core-0.1.22/lib/?.lua;/root/install/web_spec_ini/nginx-1.20.1/lua_module/lua-resty-lrucache-0.15/lib/?.lua;';
+
+set_by_lua_block $first_char {
+	return "123"
+}
+add_header X-Last-Part $first_char;
+
+content_by_lua_block {
+	ngx.say("Hello from Lua!");
+}
+
+
+```
