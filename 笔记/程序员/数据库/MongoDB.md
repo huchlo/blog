@@ -108,7 +108,7 @@ mongodump -h 10.0.17.28:27017 --username sgame --password look2022 -d db_sgame_o
 mongorestore -h 127.0.0.1:27017 -d 恢复的数据库名 /home/data
 
 #导出 单张数据表，-f是指定字段导出
-mongoexport -h 127.0.0.1:27017 -d 数据库名 -c 表名 -o /home/data/user.json
+mongoexport -h 127.0.0.1:27017 -d db_sgame_oss --username sgame --password look2022 -c t_tp_match_log -o /home/centos/tmp.json
 mongoexport -h 127.0.0.1:27017 -d 数据库名 -c 表名 -o /home/data/user.json -f "_id, username, password"
 #导入 单张数据表
 mongoimport -h 127.0.0.1:27017 -d 数据库名 -c 表名 /home/data/user.json
