@@ -576,6 +576,7 @@ export PATH=$PATH:$NODE_HOME/bin:$NODE_GLOBAL_MODEL/bin:$YARN_INSTALL/bin
 npm config set prefix "/usr/local/nodejs/node_global"
 npm config set cache "/usr/local/nodejs/node_cache"
 npm config set registry "http://mirrors.cloud.tencent.com/npm/"
+npm config set registry "https://registry.npmjs.org/"
 
 npm install -g yarn
 yarn config set cache-folder "/usr/local/nodejs/yarn_cache"

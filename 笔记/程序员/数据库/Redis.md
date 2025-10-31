@@ -46,6 +46,7 @@ chkconfig --del name #删除服务
 
 
 # console
+ Redis常用命令手册 http://c.biancheng.net/redis_command/
 ```bash
 
 redis> set foo bar
@@ -248,7 +249,7 @@ pidfile "/tmp/redis_6379.pid"
 loglevel notice
 logfile "/tmp/redis_6379.log"
 
-#db文件修改看这里
+#rdb文件修改看这里
 
 save 900 1
 save 300 10
@@ -303,3 +304,50 @@ masterauth "Z%(OSinLCi!sk*X3h#REDIS"
 requirepass "Z%(OSinLCi!sk*X3h#REDIS"
 
 ```
+
+# 持久化
+redis的持久化分AOP和RDB两种，AOP是在增量的将数据操作同步到文件（比较实时），RDB是将内存的快照保存到文件，可同时使用
+
+```bash
+#aop触发方式
+#在redis.conf中
+appendonly yes
+appendfilename "appendonly.aof"
+appenddirname "appendonlydir"
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+aof-load-truncated yes
+aof-use-rdb-preamble yes
+aof-timestamp-enabled no
+
+#rdb触发方式
+#在redis-cli中
+SAVE #直接保存，会阻塞主线程
+BGSAVE #生一个子进程保存，不会阻塞主线程
+#在redis.conf中
+save 900 1 #900秒内至少发生1次写操作
+save 300 10 #300秒内至少发生10次写操作
+save 60 10000 #60秒内至少发生10000次写操作时
+
+save 3600 1 300 100 60 10000
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+rdb-del-sync-files no
+dir /var/lib/redis
+
+```
+
+正常恢复： 
+修改redis.windows.conf中的appendonly no，改为yes 
+将有数据的aof⽂件复制⼀份到对应⽬录（利⽤config get dir查看⽬录） 
+重启Redis重新加载即可⾃动恢复数据
+
+RDB的备份与恢复 
+先通过config get dir指令查询rdb⽂件的⽬录 
+关闭redis服务 
+将备份的快照⽂件（如dump.rdb）拷⻉到查询出来的⽬录下 
+启动Redis，备份的快照数据将会被直接加载

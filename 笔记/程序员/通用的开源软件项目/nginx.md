@@ -86,7 +86,8 @@ http{
 ```bash
 ./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module
 make
-#不执行 make install
+#不执行 make install,如果执行了会覆盖之前的安装
+#刚编译好的nginx在./objs/nginx，需要cp ./objs/nginx /usr/local/nginx/sbin/
 ```
 如果报错 ./configure: error: SSL modules require the OpenSSL library.则需要安装openssl模块
 `yum -y install openssl openssl-devel`
