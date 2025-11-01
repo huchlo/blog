@@ -1,4 +1,4 @@
-mlombok插件官网：https://projectlombok.org
+lombok插件官网：https://projectlombok.org
 
 使用lombok分两步
 1. 在开发工具（如idea）安装lombok插件

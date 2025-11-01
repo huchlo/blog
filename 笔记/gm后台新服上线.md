@@ -1,0 +1,111 @@
+# 前端 look-ui
+1. 使用npm run build:prod 打包前端代码
+2. 打包后的代码在dist目录下
+3. 上传dist目录下的文件到服务端的/data/app/GmWebSGame/dist目录下
+4. 修改look.config.js文件
+
+```js
+window.server = {
+    title: "newcd马来西亚", // 页面的title
+    timezone: 8,    // 时区，如墨西哥是-6
+    ratio: 1000,    //游戏金币和金额（元）的比率，一般是1000，印尼是1，印度是100
+    timeZone: 'Asia/Kuching',// 服务器时间时区
+    hourOffset: 0,  // 服务器时间和中国时间的小时差，如中国时区是+8，墨西哥时区是-6，那么hourOffset就是14；印度是+5.5，那么hourOffset就是2.5
+    exchangeRate: 4.44 // 对美元的汇率
+}
+```
+
+    如果是只是更新，只上传index.html文件和static文件夹，千万别覆盖look.config.js文件
+
+# 后台 
+1. 在look-player-log/src/main/java/com/look/player/controller/game/TRoleAgentController.java中的init()添加配置
+    agentConfigType是配置文件中的值，可以自定义，weekTaskJson是每周任务的奖励配置，每个国家的奖励不同，需要根据实际情况修改
+2. 先使用maven工具clean，再install
+3. 上传look-admin子项目中的target目录下的look-admin.jar文件到服务端的/data/app/GmWebSGame/ryadmin目录下
+4. 修改/data/app/GmWebSGame/ryadmin/config/GameAgentRecruitConfig.csv文件，这是游戏代理招募配置文件，需要根据实际情况修改
+如：
+type,count,extraRewards
+common,1,80
+deposit,1,2000
+deposit,5,3000
+
+common是普通代理用户的配置，该功能游戏已不使用，不需要修改
+deposit是充值代理用户的配置，count是人数，extraRewards是额外的奖励
+
+
+5. 修改/data/app/GmWebSGame/ryadmin/config/application-prod.yml文件，这是游戏服务器配置文件，需要根据实际情况修改
+
+```yaml
+look:
+    cdnDomain: https://cdn.yasfyq.com/
+game:
+    basicRewards: # 基础奖励
+    agentConfigType: 1 # 每周任务奖励配置
+    firstRewards: # 游戏显示用，首充可以奖励的金额
+    exchangeRate: 1 # 对美元的汇率
+```
+6. 检查/data/app/sgamecdn下有没有软链接profile，指向/data/app/GmWebSGame/uploadpath目录，如果没有运行sudo ln -s /data/app/GmWebSGame/uploadpath/ /data/app/sgamecdn/profile
+
+7. 检查mysql中的db_gmweb_sgame数据库是否是最新的表结构，如不是，需要运行sql脚本更新表结构
+可能用到的指令：
+
+```bash
+mysql -h127.0.0.1 -usgame -plook2022 -D db_gmweb_sgame #打开mysql中的db_gmweb_sgame数据库
+# 备份数据库结构和存储过程
+mysqldump -h127.0.0.1 -usgame -plook2022 --no-data --routines --events db_gmweb_sgame > backup123.sql
+# 备份数据库数据
+mysqldump -h127.0.0.1 -usgame -plook2022 db_gmweb_sgame sys_config sys_dept sys_dict_data sys_dict_type sys_job sys_menu sys_post sys_role sys_role_dept sys_role_menu sys_user sys_user_post sys_user_role> backup2.sql
+
+```
+
+```sql
+-- 查看表结构
+show create table tableName; #表结构
+-- 查看数据库当前时间，这个是时间和服务器时间不同，需要重启数据库
+select now();
+-- 显示当前数据库的所有表
+show tables; 
+-- truncate 清空表
+truncate table look_parameter;
+truncate table stats_channel;
+truncate table stats_platform;
+truncate table stats_retained;
+truncate table stats_retained_first_rech;
+truncate table stats_retained_rech;
+truncate table stats_roi;
+truncate table stats_roi_date;
+truncate table stats_role;
+truncate table stats_room;
+truncate table stats_room_role;
+truncate table t_role_agent;
+truncate table t_role_agent_log;
+truncate table t_role_simple;
+truncate table stats_pu;
+truncate table stats_pu_date;
+truncate table stats_game_report;
+```
+
+6. 修改ry.sh
+-Duser.timezone=GMT+8 修改成正确的时区
+
+
+7. 重启服务，使用/data/app/GmWebSGame/ryadmin下的ry.sh脚本
+./ry.sh restart
+./ry.sh start
+./ry.sh stop
+./ry.sh status
+
+8. 检查游戏是否正常运行
+查看日志： tail -f logs/sys-info.log
+公告接口： https://bbb.aaa.com/prod-api/game/notice
+
+
+## 更新字典文件：GameWebDefDict.csv
+复制到/data/app/GmWebSGame/ryadmin/config目录下
+get请求http://127.0.0.1:59001/prod-api/game/bPcCGw90uE9xDZJbTuGWxC5kHvRb2NhrJXXqvVccb6XwzZj7aHnd2TgbBGregks1HKhJ4AAPdFyhKpiNXpfkQfXVkA7n9hAqLyxb/reloadCsv
+
+## 另外需要注意的配置，一般不需要修改
+look-player-log/src/main/java/com/look/player/comm/LookConstants.java
+public static final double BASIC_REWARDS_DEPOSIT_CONFIG = 0.1;//有效（单手机号单ip）代理用户，充值后获取的百分比
+public static final long WEEK_BASIC_RATE = 3;//新代理，发放工资百分比的基础，需要除100
+
