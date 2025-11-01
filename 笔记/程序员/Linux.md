@@ -244,6 +244,9 @@ systemctl disable firewalld #开机禁用
 systemctl enable firewalld #开机启用
 
 firewall-cmd --state #查看默认防火墙状态
+firewall-cmd --permanent --add-port=8080/tcp #开放一个端口
+firewall-cmd --reload #设置端口后，需要重新加载才生效
+firewall-cmd --list-ports #检查端口是否已成功开放
 firewall-cmd --permanent --add-rich-rule='rule protocol value=icmp drop' #禁止被ping（丢弃ICMP包）
 ```
 https://firewalld.org/documentation/man-pages/firewall-cmd.html

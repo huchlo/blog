@@ -88,18 +88,33 @@ db.asd.remove({'asd':123}) #删除符合的所有数据
 db.asd.remove(<query>,justOne<boolean>) #删除数据,justOne,是否只删除一个文档，默认为false
 ```
 
+```bash
+db.t_gold_log.getIndexes()
+db.t_gold_log.totalIndexSize()
+db.t_gold_log.stats().indexSizes
+db.t_gold_log.ensureIndex({chg_reason:1})
+db.t_gold_log.ensureIndex({chg_reason:1},{unique:true})
+db.t_gold_log.reIndex()
+db.t_gold_log.ensureIndex({rid:1}) //创建索引
+db.t_gold_log.dropIndex({chg_reason:1})
+```
+
 3. 备份与恢复
 ```bash
 #备份 数据库
 mongodump -h 127.0.0.1:27017 -d 数据库名 -o /home/data
+mongodump -h 10.0.17.28:27017 --username sgame --password look2022 -d db_sgame_oss -c t_login_log --query '{ "dtime": { "$gte": "2023-12-15 00:00:00" } }' -o /home
 #恢复 数据库
 mongorestore -h 127.0.0.1:27017 -d 恢复的数据库名 /home/data
 
 #导出 单张数据表，-f是指定字段导出
-mongoexport -h 127.0.0.1:27017 -d 数据库名 -c 表名 -o /home/data/user.json
+mongoexport -h 127.0.0.1:27017 -d db_sgame_oss --username sgame --password look2022 -c t_tp_match_log -o /home/centos/tmp.json
 mongoexport -h 127.0.0.1:27017 -d 数据库名 -c 表名 -o /home/data/user.json -f "_id, username, password"
 #导入 单张数据表
 mongoimport -h 127.0.0.1:27017 -d 数据库名 -c 表名 /home/data/user.json
 ```
 
 [mongodump — MongoDB Database Tools](https://www.mongodb.com/docs/database-tools/mongodump/#mongodb-binary-bin.mongodump)
+
+# Install `mongosh`
+https://www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install
