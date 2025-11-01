@@ -124,6 +124,7 @@ cat /proc/swaps ：查看所有swap分区的信息
 
 ### `tar` `zip` `unzip` `bzip2` `bunzip2` `gunzip` `gzip`
 ```bash
+# -v 显示操作过程
 tar -xvf FileName.tar
 tar -xzvf  FileName.tar.gz
 tar -jxvf FileName.tar.bz2
@@ -296,6 +297,7 @@ ssh-keygen -t dsa
 - 把本地主机的公钥复制到远程主机的authorized_keys文件上
 ssh-copy-id root@com01
 ssh-copy-id -i id_rsa.pub root@com01
+ps: rsa 才有效
 需要输入com01的密码
 运行之后ssh登录如果还需要密码，去检查ssh日志 /var/log/secure ,一般是因为/root目录的权限不够（root用户登录），chmod 750 root
 - 本机ssh免密

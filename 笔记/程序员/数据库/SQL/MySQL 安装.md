@@ -105,6 +105,7 @@ flush privileges;
 安装后的my.cnf在/etc下
 
 # windows安装
+https://dev.mysql.com/downloads/installer/ 新版可以直接安装了
 解压缩
        将下载到的文件解压缩到自己喜欢的位置，例如我自己的位置是D:\Program Files\mysql-5.7.10-winx64
 添加环境变量

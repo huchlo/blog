@@ -57,10 +57,12 @@ docker中文文档：https://www.widuu.com/docker/?_t=t
 
 小猿取经docker$k8s教程：https://www.cnblogs.com/xiaoyuanqujing/p/11839932.html
 
-centos下安装docker-ce
+# centos下安装docker-ce
 
 yum install -y yum-utils
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+	yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
 yum install docker-ce
 docker -v
 
