@@ -7,7 +7,7 @@ trpc：[介绍 | tRPC](https://trpc.group/zh/docs/what-is-trpc/)
 	不使用mysql，不使用framework，只用TarsCpp创建服务，linux环境下开发
 
 ## 编译环境 centos 7.9
->centos: yum install -y glibx-devel gcc gcc-c++ bison flex which psmisc ncurses-devel zlib-devel git wget 
+>centos: yum install -y glibc-devel gcc gcc-c++ bison flex which psmisc ncurses-devel zlib-devel git wget 
 
 >ubuntu: sudo apt-get install -y build-essential bison flex psmisc libncurses5-dev-zlib1g-dev get wget
 
